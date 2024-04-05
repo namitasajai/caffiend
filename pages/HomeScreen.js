@@ -1,6 +1,7 @@
 import React from "react";
 import { ScrollView, StyleSheet, View, StatusBar, SafeAreaView } from "react-native";
 import CafeCard from "./components/CafeCard";
+import Header from "./components/Header";
 
 const cafeInfo = {
   name: "B Cup Cafe",
@@ -12,6 +13,7 @@ const cafeInfo = {
 const HomeScreen = () => (
   <SafeAreaView style={styles.container}>
     <StatusBar barStyle="dark-content" />
+    <Header />
     <ScrollView style={styles.scrollView}>
       <View style={styles.cardContainer}>
         <CafeCard cafe={cafeInfo} />
