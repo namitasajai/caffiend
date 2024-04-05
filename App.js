@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { House, UsersThree, Heart, Coffee } from 'phosphor-react-native';
+import { House, UsersThree, Heart, Clipboard } from 'phosphor-react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +27,7 @@ const App = () => {
             } else if (route.name === 'Favorites') {
               return <Heart size={size} color={color} weight={focused ? "fill" : "thin"} />;
             } else if (route.name === 'Review') {
-              return <Coffee size={size} color={color} weight={focused ? "fill" : "thin"} />;
+              return <Clipboard size={size} color={color} weight={focused ? "fill" : "thin"} />;
             }
           },
           tabBarStyle: {
