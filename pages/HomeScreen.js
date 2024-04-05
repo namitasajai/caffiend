@@ -1,12 +1,11 @@
 import React from "react";
-import { ScrollView, Text} from "react-native";
+import { View, Text } from "react-native";
+import Header from "../components/Header";
 
 const HomeScreen = () => (
-  <ScrollView>
-    <Text>
-      meow
-    </Text>
-  </ScrollView>
+  <View>
+    <Header />
+  </View>
 );
 
 export default HomeScreen;
