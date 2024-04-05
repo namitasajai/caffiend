@@ -1,29 +1,24 @@
 // CafeCard.js
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { MapPin, Wifi, Coffee, CurrencyCircleDollar } from 'phosphor-react-native';
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { ArrowElbowUpRight } from "phosphor-react-native";
 
 const CafeCard = ({ cafe }) => {
   return (
     <View style={styles.card}>
-      <Image source={{ uri: cafe.imageUrl }} style={styles.image} />
-      <View style={styles.infoContainer}>
-        <Text style={styles.cafeName}>{cafe.name}</Text>
-        <Text style={styles.distance}>{cafe.distance} miles</Text>
-        <TouchableOpacity style={styles.directionButton}>
-          <MapPin size={24} color="#FFFFFF" weight="fill" />
-          <Text style={styles.directionButtonText}>Directions</Text>
+      <View style={styles.content}>
+        <Text style={styles.name}>{cafe.name}</Text>
+        <View style={styles.subheading}>
+          <Text style={styles.distance}>{cafe.distance} miles</Text>
+          <TouchableOpacity style={styles.directionsButton}>
+            <ArrowElbowUpRight size={16} color="#fff" weight="regular" />
+            <Text style={styles.directionsText}>Directions</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.offeringsButton}>
+          <Text style={styles.offeringsText}>Offerings +</Text>
         </TouchableOpacity>
-        <View style={styles.offeringsContainer}>
-          <Text style={styles.offeringsTitle}>Offerings</Text>
-          <Coffee size={24} color="#333333" />
-          <Wifi size={24} color="#333333" />
-          <CurrencyCircleDollar size={24} color="#333333" />
-          {/* Add other icons as needed */}
-        </View>
-        <View style={styles.ratingContainer}>
-          <Text style={styles.ratingText}>{cafe.rating}</Text>
-        </View>
+        <Text style={styles.rating}>{cafe.rating}</Text>
       </View>
     </View>
   );
@@ -31,72 +26,61 @@ const CafeCard = ({ cafe }) => {
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: 'row',
-    backgroundColor: '#FFF8E1',
-    borderRadius: 10,
-    overflow: 'hidden',
-    alignItems: 'center',
-    marginHorizontal: 16,
-    marginVertical: 8,
-  },
-  image: {
-    width: 100,
-    height: 100,
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
-  },
-  infoContainer: {
+    backgroundColor: "#F0E6D0",
+    borderRadius: 20,
     padding: 16,
-    flex: 1,
+    marginVertical: 8,
+    marginHorizontal: 16,
   },
-  cafeName: {
-    fontSize: 18,
-    fontWeight: 'bold',
+  subheading: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 8, 
+  },
+  content: {
+    alignItems: "flex-start",
+  },
+  name: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
   distance: {
-    fontSize: 14,
-    color: '#333333',
+    fontSize: 16,
+    color: "#666",
+    marginTop: 4,
   },
-  directionButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#0000FF',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+  directionsButton: {
+    flexDirection: "row",
+    marginTop: 8,
+    backgroundColor: "#7689AB",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
     borderRadius: 20,
-    marginTop: 8,
+    gap: 4,
   },
-  directionButtonText: {
-    marginLeft: 8,
-    color: '#FFFFFF',
+  directionsText: {
+    color: "#fff",
     fontSize: 16,
+    textAlign: "center",
   },
-  offeringsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  offeringsButton: {
     marginTop: 8,
+    backgroundColor: "#fff",
+    paddingHorizontal: 32,
+    paddingVertical: 4,
+    borderRadius: 20,
   },
-  offeringsTitle: {
+  offeringsText: {
     fontSize: 16,
-    fontWeight: 'bold',
-    marginRight: 8,
+    color: "#666666",
+    textAlign: "center",
   },
-  ratingContainer: {
-    position: 'absolute',
-    top: 16,
-    right: 16,
-    backgroundColor: '#A1887F',
-    borderRadius: 50,
-    width: 50,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  ratingText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
+  rating: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#444",
+    marginTop: 8,
   },
 });
 
