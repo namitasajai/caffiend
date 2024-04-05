@@ -1,16 +1,16 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { House, UsersThree, Heart, Clipboard } from 'phosphor-react-native';
+import React from "react";
+import { View, Text, ScrollView } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { House, UsersThree, Heart, Clipboard } from "phosphor-react-native";
+import CafeCard from './components/CafeCard'; 
+import ReviewScreen from './pages/ReviewScreen';
+import HomeScreen from './pages/HomeScreen';
+import SocialScreen from './pages/SocialScreen';
+import FavoritesScreen from './pages/FavoritesScreen';
 
 const Tab = createBottomTabNavigator();
 
-// Dummy screen components
-const HomeScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Home Screen</Text></View>;
-const SocialScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Social Screen</Text></View>;
-const FavoritesScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Favorites Screen</Text></View>;
-const ReviewScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Review Screen</Text></View>;
 
 const App = () => {
   return (
@@ -20,22 +20,46 @@ const App = () => {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
-            if (route.name === 'Home') {
-              return <House size={size} color={color} weight={focused ? "fill" : "thin"} />;
-            } else if (route.name === 'Social') {
-              return <UsersThree size={size} color={color} weight={focused ? "fill" : "thin"} />;
-            } else if (route.name === 'Favorites') {
-              return <Heart size={size} color={color} weight={focused ? "fill" : "thin"} />;
-            } else if (route.name === 'Review') {
-              return <Clipboard size={size} color={color} weight={focused ? "fill" : "thin"} />;
+            if (route.name === "Home") {
+              return (
+                <House
+                  size={size}
+                  color={color}
+                  weight={focused ? "fill" : "thin"}
+                />
+              );
+            } else if (route.name === "Social") {
+              return (
+                <UsersThree
+                  size={size}
+                  color={color}
+                  weight={focused ? "fill" : "thin"}
+                />
+              );
+            } else if (route.name === "Favorites") {
+              return (
+                <Heart
+                  size={size}
+                  color={color}
+                  weight={focused ? "fill" : "thin"}
+                />
+              );
+            } else if (route.name === "Review") {
+              return (
+                <Clipboard
+                  size={size}
+                  color={color}
+                  weight={focused ? "fill" : "thin"}
+                />
+              );
             }
           },
           tabBarStyle: {
-            backgroundColor: '#FBF8F1',
+            backgroundColor: "#FBF8F1",
             borderTopWidth: 0,
           },
-          tabBarActiveTintColor: '#333333',
-          tabBarInactiveTintColor: '#333333',
+          tabBarActiveTintColor: "#333333",
+          tabBarInactiveTintColor: "#333333",
           headerShown: false,
         })}
       >
