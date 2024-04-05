@@ -1,9 +1,7 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { House, UsersThree, Heart, Clipboard } from "phosphor-react-native";
-import CafeCard from './components/CafeCard'; 
 import ReviewScreen from './pages/ReviewScreen';
 import HomeScreen from './pages/HomeScreen';
 import SocialScreen from './pages/SocialScreen';
