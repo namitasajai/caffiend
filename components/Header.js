@@ -14,13 +14,10 @@ const Header = () => {
   return (
     <View style={styles.container}>
       <View style={styles.statusBarPlaceholder} />
-      <Text style={styles.timeText}>9:41</Text>
-
       <View style={styles.locationContainer}>
         <MapPin size={16} color="#333" weight="bold" />
         <Text style={styles.locationText}>New York, NY, USA</Text>
       </View>
-
       <View style={styles.searchContainer}>
         <MagnifyingGlass size={20} color="#666" />
         <TextInput placeholder="Search" style={styles.searchInput} />
@@ -44,13 +41,6 @@ const styles = StyleSheet.create({
   },
   statusBarPlaceholder: {
     height: 20, // Adjust if needed for the specific iPhone model you are targeting
-  },
-  timeText: {
-    fontSize: 17,
-    fontWeight: "600",
-    color: "black",
-    alignSelf: "flex-start",
-    marginTop: -28, // Adjust as needed for your layout
   },
   locationContainer: {
     flexDirection: "row",
