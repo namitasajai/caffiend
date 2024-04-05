@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, View, StatusBar, SafeAreaView } from "react-native";
-import CafeCard from "./components/CafeCard";
+import CafeCard from "../components/CafeCard";
 import Header from "./components/Header";
 
 const cafeInfo = {
