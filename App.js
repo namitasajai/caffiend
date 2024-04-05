@@ -2,15 +2,15 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { House, UsersThree, Heart, ClipboardText } from 'phosphor-react-native';
+import { House, UsersThree, Heart, Coffee } from 'phosphor-react-native';
 
 const Tab = createBottomTabNavigator();
 
 // Dummy screen components
-const HomeScreen = () => <View><Text>Home Screen</Text></View>;
-const SocialScreen = () => <View><Text>Social Screen</Text></View>;
-const FavoritesScreen = () => <View><Text>Favorites Screen</Text></View>;
-const ReviewScreen = () => <View><Text>Review Screen</Text></View>;
+const HomeScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Home Screen</Text></View>;
+const SocialScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Social Screen</Text></View>;
+const FavoritesScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Favorites Screen</Text></View>;
+const ReviewScreen = () => <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text>Review Screen</Text></View>;
 
 const App = () => {
   return (
@@ -21,17 +21,22 @@ const App = () => {
             let iconName;
 
             if (route.name === 'Home') {
-              return <House size={size} color={color} />;
+              return <House size={size} color={color} weight={focused ? "fill" : "thin"} />;
             } else if (route.name === 'Social') {
-              return <UsersThree size={size} color={color} />;
+              return <UsersThree size={size} color={color} weight={focused ? "fill" : "thin"} />;
             } else if (route.name === 'Favorites') {
-              return <Heart size={size} color={color} />;
+              return <Heart size={size} color={color} weight={focused ? "fill" : "thin"} />;
             } else if (route.name === 'Review') {
-              return <ClipboardText size={size} color={color} />;
+              return <Coffee size={size} color={color} weight={focused ? "fill" : "thin"} />;
             }
           },
-          tabBarActiveTintColor: 'tomato',
-          tabBarInactiveTintColor: 'gray',
+          tabBarStyle: {
+            backgroundColor: '#FBF8F1',
+            borderTopWidth: 0,
+          },
+          tabBarActiveTintColor: '#333333',
+          tabBarInactiveTintColor: '#333333',
+          headerShown: false,
         })}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
