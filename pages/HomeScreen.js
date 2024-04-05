@@ -1,18 +1,17 @@
 import React from "react";
 import { ScrollView, StyleSheet, View, StatusBar, SafeAreaView } from "react-native";
 import CafeCard from "../components/CafeCard";
-import Header from "./components/Header";
+import Header from "../components/Header";
 
 const cafeInfo = {
   name: "B Cup Cafe",
   distance: "0.1",
-  // imageUrl: "https://yourimageurl.com/image.jpg",
+  imageUrl: "https://t4.ftcdn.net/jpg/06/68/38/09/360_F_668380954_3krhgtwcZr7nGROtEYJgzdQgOkd20APK.jpg",
   rating: "6.7",
 };
 
 const HomeScreen = () => (
-  <SafeAreaView style={styles.container}>
-    <StatusBar barStyle="dark-content" />
+  <View style={styles.container}>
     <Header />
     <ScrollView style={styles.scrollView}>
       <View style={styles.cardContainer}>
@@ -22,13 +21,14 @@ const HomeScreen = () => (
         {/* You can repeat CafeCard for a list or map through an array of cafes */}
       </View>
     </ScrollView>
-  </SafeAreaView>
+  </View>
 );
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5", // Use the background color that suits your theme
+    flex: 1, 
+    fontFamily: "Inter_400Regular",
+    backgroundColor: "#FBF8F1", // Use the background color that suits your theme
   },
   scrollView: {
     marginHorizontal: 20, // Provides horizontal space
