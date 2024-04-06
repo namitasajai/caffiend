@@ -9,8 +9,7 @@ import {
   Heart,
 } from "phosphor-react-native";
 
-
-const CafeCard = ({ cafe }) => {
+const CafeCard = ({ cafe, handleCafePress }) => {
   const [isFavorited, setIsFavorited] = useState(cafe.favorited);
 
   const toggleFavorite = () => {
@@ -18,7 +17,7 @@ const CafeCard = ({ cafe }) => {
   };
 
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={() => handleCafePress(cafe)}>
       <Image source={{ uri: cafe.imageUrl }} style={styles.image} />
       <View style={styles.details}>
         <Text style={styles.name}>{cafe.name}</Text>
@@ -41,8 +40,17 @@ const CafeCard = ({ cafe }) => {
         <View style={styles.ratingContainer}>
           <Text style={styles.rating}>{cafe.rating}</Text>
         </View>
-        <TouchableOpacity style={styles.favoriteContainer} onPress={toggleFavorite}>
-          {<Heart size={30} color="#E66565" weight={isFavorited ? 'fill' : 'thin'} /> }
+        <TouchableOpacity
+          style={styles.favoriteContainer}
+          onPress={toggleFavorite}
+        >
+          {
+            <Heart
+              size={30}
+              color="#E66565"
+              weight={isFavorited ? "fill" : "thin"}
+            />
+          }
         </TouchableOpacity>
       </View>
     </TouchableOpacity>

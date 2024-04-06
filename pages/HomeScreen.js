@@ -1,33 +1,41 @@
-import React from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  StatusBar,
-  SafeAreaView,
-} from "react-native";
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import CafeCard from "../components/CafeCard";
 import cafeData from "../components/cafeData";
 import Header from "../components/Header";
+import BottomSheetModal from "../components/BottomSheetModal"; 
 
+const HomeScreen = () => {
+  const [selectedCafe, setSelectedCafe] = useState(null);
+  const [isModalVisible, setModalVisible] = useState(false);
 
+  const handleCafePress = (cafe) => {
+    setSelectedCafe(cafe);
+    console.log(cafe); 
+    setModalVisible(true);
+  };
 
-const HomeScreen = () => (
-  <View style={styles.container}>
-    <Header />
-    
-    <ScrollView style={styles.scrollView}>
-    <Text style={styles.title}>Near You</Text>
-      <View style={styles.cardContainer}>
-        {cafeData.map((cafe, index) => (
-          <CafeCard key={index} cafe={cafe} />
-        ))}
-  
-      </View>
-    </ScrollView>
-  </View>
-);
+  return (
+    <View style={styles.container}>
+      <Header title="Location" />
+      <ScrollView style={styles.scrollView}>
+        <Text style={styles.title}>Near You</Text>
+        <View style={styles.cardContainer}>
+          {cafeData.map((cafe, index) => (
+              <CafeCard cafe={cafe} handleCafePress={handleCafePress} />
+          ))}
+        </View>
+      </ScrollView>
+      {isModalVisible && (
+        <BottomSheetModal
+          isVisible={isModalVisible}
+          onSwipeComplete={() => setModalVisible(false)}
+          cafe={selectedCafe}
+        />
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -43,7 +51,7 @@ const styles = StyleSheet.create({
     marginTop: 18, // Provides space from the top
   },
   scrollView: {
-    marginHorizontal: 18, // Provides horizontal space
+    paddingHorizontal: 18, // Provides horizontal space
   },
   cardContainer: {
     marginVertical: 12, // Provides vertical space between cards

@@ -1,13 +1,18 @@
+
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { Heart, ChatCircle } from "phosphor-react-native";
 
 const ReviewCard = () => {
   return (
     <View style={styles.card}>
+      <View style={styles.ratingContainer}>
+        <Text style={styles.rating}>8.5</Text>
+      </View>
       <View style={styles.topSection}>
         <Image
           style={styles.avatar}
-          source={{ uri: "https://via.placeholder.com/47x47" }}
+          source={{ uri: "https://i.pinimg.com/564x/bb/8a/91/bb8a91a047deaa78f7a89228f80d92da.jpg" }}
         />
         <View>
           <Text style={styles.userName}>
@@ -17,33 +22,31 @@ const ReviewCard = () => {
             <Text style={styles.coffeeShopName}>Elixr Coffee</Text>
           </View>
         </View>
-        <View style={styles.ratingContainer}>
-          <Text style={styles.rating}>8.5</Text>
+      </View>
+      <View style={styles.reviewContainer}>
+        <Text style={styles.reviewText}>
+          Coffee was pretty good! Would not recommend their pastries though.
+          Spend a good 3hrs studying here and had a pretty productive sesh:)
+          Wish me luck for midterms tmrw.
+        </Text>
+        <View style={styles.photoStrip}>
+          {/* Repeat Image component for as many photos as you need */}
+          <Image
+            style={styles.photo}
+            source={{ uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg" }}
+          />
+          {/* ... */}
         </View>
       </View>
-      <Text style={styles.reviewText}>
-        Coffee was pretty good! Would not recommend their pastries though. Spend
-        a good 3hrs studying here and had a pretty productive sesh:) Wish me
-        luck for midterms tmrw.
-      </Text>
-      <View style={styles.photoStrip}>
-        {/* Repeat Image component for as many photos as you need */}
-        <Image
-          style={styles.photo}
-          source={{ uri: "https://via.placeholder.com/93x93" }}
-        />
-        {/* ... */}
-      </View>
+
       <Text style={styles.date}>March 31, 2024 at 3:58pm</Text>
       {/* Icons or buttons for actions */}
       <View style={styles.actionsContainer}>
         <TouchableOpacity style={styles.iconButton}>
-          {/* Icon for Like - placeholder view used here */}
-          <View style={styles.likeIconPlaceholder} />
+          <Heart size={18} color="#CCCCCC" weight="fill" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconButton}>
-          {/* Icon for Comment - placeholder view used here */}
-          <View style={styles.commentIconPlaceholder} />
+          <ChatCircle size={18} color="#CCCCCC" weight="fill" />
         </TouchableOpacity>
       </View>
     </View>
@@ -52,12 +55,12 @@ const ReviewCard = () => {
 
 const styles = StyleSheet.create({
   card: {
-    width: "90%",
     backgroundColor: "#F0E6D0",
     borderRadius: 21.04,
-    padding: 22,
+    padding: 20,
     flexDirection: "column",
     alignItems: "flex-start",
+    marginBottom: 12,
   },
   topSection: {
     flexDirection: "row",
@@ -70,61 +73,69 @@ const styles = StyleSheet.create({
     borderRadius: 23.5,
     borderColor: "white",
     borderWidth: 2,
-    margin: 10,
+    marginRight: 10,
   },
   userName: {
     color: "black",
     fontSize: 13.72,
-    fontWeight: "500",
-    paddingHorizontal: 15,
+    fontFamily: "Inter_500Medium",
   },
   ratedText: {
-    fontWeight: "400",
+    fontFamily: "Inter_400Regular",
   },
   coffeeShopNameContainer: {
     backgroundColor: "#96A978",
     borderRadius: 27,
     marginTop: 4,
-    marginHorizontal: 15,
-    paddingHorizontal: 10,
-    paddingVertical: 2,
+    paddingHorizontal: 10, // Provide horizontal padding
+    paddingVertical: 2, // Provide vertical padding
     width: 100,
   },
   coffeeShopName: {
     color: "#FBF8F1",
     fontSize: 13.72,
-    fontFamily: "Inter",
-    fontWeight: "600",
+    fontFamily: "Inter_600SemiBold",
   },
   ratingContainer: {
     backgroundColor: "#4F1C11",
-    borderRadius: 46,
-    padding: 8,
-    marginLeft: 20,
+    width: 40,
+    height: 40,
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    right: 20,
+    top: 20,
   },
   rating: {
-    textAlign: "center",
-    color: "#E58D23",
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: "bold",
+    fontFamily: "Inter_700Bold",
+    color: "#E58D23",
+  },
+  reviewContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: 220,
   },
   reviewText: {
     color: "#333333",
     fontSize: 12,
-    fontWeight: "400",
+    fontFamily: "Inter_400Regular",
     marginBottom: 13,
+    width: 200,
+    lineHeight: 18,
   },
   photoStrip: {
     flexDirection: "row",
     position: "relative",
-    height: 103.29,
-    marginBottom: 13,
+    height: 103.29, // Set a fixed height for the image strip
   },
   photo: {
     width: 93.29,
     height: 93.29,
     borderRadius: 15.55,
-    position: "absolute",
+    position: "absolute", // Adjust positions accordingly for overlap
   },
   date: {
     color: "#8F8F8F",

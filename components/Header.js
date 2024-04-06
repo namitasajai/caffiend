@@ -8,13 +8,13 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { MapPin, MagnifyingGlass } from "phosphor-react-native";
+import { MapPin, MagnifyingGlass, FunnelSimple } from "phosphor-react-native";
 
-const Header = () => {
+const Header = ({title}) => {
   return (
     <View style={styles.container}>
       <View style={styles.statusBarPlaceholder} />
-      <Text style={styles.title}>Location</Text>
+      <Text style={styles.title}>{title}</Text>
       <View style={styles.locationContainer}>
         <MapPin size={18} color="#333" weight="bold" />
         <Text style={styles.locationText}>New York, NY, USA</Text>
@@ -22,6 +22,9 @@ const Header = () => {
       <View style={styles.searchContainer}>
         <MagnifyingGlass size={20} color="#666" />
         <TextInput placeholder="Search" style={styles.searchInput} />
+        <TouchableOpacity style={styles.filterBtn}>
+          <FunnelSimple size={13} color="#666" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -32,35 +35,36 @@ const screenHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   container: {
+    display: "flex",
     backgroundColor: "#96A978",
     borderRadius: 38,
-    height: screenHeight / 5, // Set the height to 1/5th of the screen height
-    justifyContent: "space-around", // Distribute children evenly
-    paddingTop: 40, // Increase the padding to give some space at the top
-    paddingBottom: 30, // Similarly, adjust the bottom padding
-    paddingHorizontal: 30, // Set horizontal padding to create space on the sides
-  },
-  statusBarPlaceholder: {
-    height: 40, 
+    padding: 25,
+    height: 190,
   },
   title: {
-    fontSize: 14,
+    fontSize: 24,
     color: "#333333",
-    fontWeight: "light",
-    marginTop: 10, 
-    marginBottom: 8, 
+    fontFamily: "Inter_500Medium",
+    marginTop: 36,
+    marginBottom: 2,
   },
   locationContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 10, 
-    marginBottom: 15,
+    marginTop: 2,
+    marginBottom: 4,
   },
   locationText: {
     marginLeft: 8,
     fontSize: 16,
     color: "#333333",
     fontWeight: "400",
+  },
+  filterBtn: {
+    borderWidth: 1,
+    borderColor: "#666",
+    borderRadius: 100,
+    padding: 4, 
   },
   searchContainer: {
     flexDirection: "row",
