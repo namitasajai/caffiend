@@ -52,6 +52,7 @@ const ReviewCard = () => {
 
 const styles = StyleSheet.create({
   card: {
+    width: "90%",
     backgroundColor: "#F0E6D0",
     borderRadius: 21.04,
     padding: 22,
@@ -75,6 +76,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 13.72,
     fontWeight: "500",
+    paddingHorizontal: 15,
   },
   ratedText: {
     fontWeight: "400",
@@ -83,21 +85,22 @@ const styles = StyleSheet.create({
     backgroundColor: "#96A978",
     borderRadius: 27,
     marginTop: 4,
-    paddingHorizontal: 10, // Provide horizontal padding
-    paddingVertical: 2, // Provide vertical padding
+    marginHorizontal: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 2,
     width: 100,
   },
   coffeeShopName: {
     color: "#FBF8F1",
     fontSize: 13.72,
-    fontFamily: "Inter", // Ensure the 'Inter' font is available in your project
+    fontFamily: "Inter",
     fontWeight: "600",
   },
   ratingContainer: {
     backgroundColor: "#4F1C11",
     borderRadius: 46,
     padding: 8,
-    marginLeft: "auto", // Push to the right
+    marginLeft: 20,
   },
   rating: {
     textAlign: "center",
@@ -114,14 +117,14 @@ const styles = StyleSheet.create({
   photoStrip: {
     flexDirection: "row",
     position: "relative",
-    height: 103.29, // Set a fixed height for the image strip
+    height: 103.29,
     marginBottom: 13,
   },
   photo: {
     width: 93.29,
     height: 93.29,
     borderRadius: 15.55,
-    position: "absolute", // Adjust positions accordingly for overlap
+    position: "absolute",
   },
   date: {
     color: "#8F8F8F",
@@ -150,7 +153,6 @@ const styles = StyleSheet.create({
     height: 16.12,
     backgroundColor: "#CCCCCC",
   },
-  // Add any other styles you need for your component
 });
 
 export default ReviewCard;
