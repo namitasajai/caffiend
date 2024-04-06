@@ -22,7 +22,7 @@ const HomeScreen = () => {
         <Text style={styles.title}>Near You</Text>
         <View style={styles.cardContainer}>
           {cafeData.map((cafe, index) => (
-              <CafeCard cafe={cafe} handleCafePress={handleCafePress} />
+              <CafeCard key={index} cafe={cafe} handleCafePress={handleCafePress} />
           ))}
         </View>
       </ScrollView>
@@ -31,6 +31,7 @@ const HomeScreen = () => {
           isVisible={isModalVisible}
           onSwipeComplete={() => setModalVisible(false)}
           cafe={selectedCafe}
+          key={selectedCafe.name}
         />
       )}
     </View>
