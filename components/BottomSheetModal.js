@@ -35,6 +35,9 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe }) => {
         <TouchableOpacity style={styles.closeBtn} onPress={onSwipeComplete}>
           <CaretDown size={32} color="#000" weight="thin" />
         </TouchableOpacity>
+        <TouchableOpacity style={styles.reviewBtn}>
+            <Text style={styles.reviewBtnText}>Leave a Review</Text>
+          </TouchableOpacity>
         <View style={styles.contentContainer}>
           <View style={styles.infoContainer}>
             <Text style={styles.name}>{cafe.name}</Text>
@@ -146,7 +149,7 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe }) => {
           </View>
           <Text style={styles.dividerHeader}> Know Before You Go </Text>
 
-          <View style={styles.divider} />
+          
         </View>
         {/* Add other elements like address, hours, review button, etc. */}
       </View>
@@ -176,6 +179,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#96A978",
     alignItems: "center",
     justifyContent: "center",
+  },
+  reviewBtn: {
+    backgroundColor: "#3E4A2B",
+    padding: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    position: "absolute", 
+    bottom: 30,
+    zIndex: 1,
+  },
+  reviewBtnText: {
+    color: "#fff",
+    fontSize: 16,
+    fontFamily: "Inter_500Medium",
   },
   image: {
     width: "100%",
