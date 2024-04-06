@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { ArrowElbowUpRight, Plus, Coffee, ForkKnife, WifiHigh } from "phosphor-react-native";
+import {
+  ArrowElbowUpRight,
+  Plus,
+  Coffee,
+  ForkKnife,
+  WifiHigh,
+  Heart,
+} from "phosphor-react-native";
 
 
 const CafeCard = ({ cafe }) => {
+  const [isFavorited, setIsFavorited] = useState(cafe.favorited);
+
+  const toggleFavorite = () => {
+    setIsFavorited(!isFavorited);
+  };
+
   return (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card}>
       <Image source={{ uri: cafe.imageUrl }} style={styles.image} />
       <View style={styles.details}>
         <Text style={styles.name}>{cafe.name}</Text>
@@ -28,8 +41,11 @@ const CafeCard = ({ cafe }) => {
         <View style={styles.ratingContainer}>
           <Text style={styles.rating}>{cafe.rating}</Text>
         </View>
+        <TouchableOpacity style={styles.favoriteContainer} onPress={toggleFavorite}>
+          {<Heart size={30} color="#E66565" weight={isFavorited ? 'fill' : 'thin'} /> }
+        </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -38,8 +54,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0E6D0",
     borderRadius: 20,
     padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginVertical: 8,
     marginHorizontal: 0,
   },
@@ -51,18 +67,18 @@ const styles = StyleSheet.create({
   },
   details: {
     flex: 1,
-    alignContent: 'top', 
+    alignContent: "top",
   },
   subheading: {
     flexDirection: "row",
     justifyContent: "left",
-    gap: 8, 
+    gap: 8,
     alignItems: "center",
   },
   name: {
     fontSize: 16,
     fontFamily: "Inter_500Medium",
-    color: '#333333',
+    color: "#333333",
     marginBottom: 4,
   },
   distance: {
@@ -76,8 +92,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   directionsText: {
     color: "#fff",
@@ -87,7 +103,7 @@ const styles = StyleSheet.create({
   },
   offeringsButton: {
     flexDirection: "row",
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     backgroundColor: "#fff",
     fontFamily: "Inter_400Regular",
     paddingHorizontal: 16,
@@ -95,8 +111,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 4,
     marginBottom: 4,
-    alignItems: 'center',
-    width: 150, 
+    alignItems: "center",
+    width: 150,
   },
   offeringsText: {
     fontSize: 12,
@@ -112,9 +128,9 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
     right: 0.5,
     bottom: 0.5,
   },
@@ -123,6 +139,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontFamily: "Inter_700Bold",
     color: "#E58D23",
+  },
+  favoriteContainer: {
+    position: "absolute",
+    right: 0.5,
+    top: 0.5,
   },
 });
 
