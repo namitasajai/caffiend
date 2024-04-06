@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { PlusCircle } from "phosphor-react-native";
 
-const windowWidth = Dimensions.get("window").width; // Get the width of the screen
+const windowWidth = Dimensions.get("window").width;
 
 const QuestionComponent = ({ onClickButton }) => {
   return (
@@ -23,7 +23,7 @@ const QuestionComponent = ({ onClickButton }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: windowWidth - 68, // Subtract total horizontal paddings (34+34) from the screen width
+    width: windowWidth - 68,
     backgroundColor: "#F0EAD6",
     borderRadius: 23,
     paddingTop: 6,
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    alignSelf: "center", // Center the container
+    alignSelf: "center",
   },
   label: {
     color: "#000000",
@@ -41,14 +41,9 @@ const styles = StyleSheet.create({
     fontFamily: "Inter",
     fontWeight: "300",
     lineHeight: 18.29,
-    marginRight: 16, // Add space between the label and the plus icon
+    marginRight: 16,
   },
-  addButton: {
-    // Define styles for your add button, like padding or a background color if needed
-  },
+  addButton: {},
 });
-
-// Usage example:
-// <AddPhotoComponent onAddPhoto={() => console.log('Add photo tapped')} />
 
 export default QuestionComponent;

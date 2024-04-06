@@ -14,6 +14,7 @@ const ReviewScreen = () => (
       alignItems: "center",
       marginTop: 40, // This will push everything down a bit
       gap: 20,
+      backgroundColor: "#FBF8F1",
     }}
   >
     <SliderComponent />
