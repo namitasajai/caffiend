@@ -1,18 +1,26 @@
 import React from "react";
 import { View } from "react-native";
-import SliderComponent from "../components/Slider"; // Assuming SliderComponent is the correct name and path
-import AddPhotoComponent from "../components/AddPhoto"; // Assuming AddPhotoComponent is the correct name and path
+import SliderComponent from "../components/Slider";
+import AddPhotoComponent from "../components/AddPhoto";
 import QuestionComponent from "../components/Question";
 import AddFavoriteDishesComponent from "../components/AddFavoriteDishes";
+import NoteComponent from "../components/NoteComponent";
 
 const ReviewScreen = () => (
   <View
-    style={{ flex: 1, justifyContent: "center", alignItems: "center", gap: 20 }}
+    style={{
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 40, // This will push everything down a bit
+      gap: 20,
+    }}
   >
     <SliderComponent />
     <AddPhotoComponent />
     <QuestionComponent />
     <AddFavoriteDishesComponent />
+    <NoteComponent />
   </View>
 );
 
