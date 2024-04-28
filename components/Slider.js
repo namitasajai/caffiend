@@ -37,8 +37,7 @@ const styles = StyleSheet.create({
   questionText: {
     color: "black",
     fontSize: 15,
-    fontFamily: "Inter",
-    fontWeight: "500",
+    fontFamily: "Inter_500Medium",
     marginBottom: 30, // Adjust as needed
   },
   slider: {
@@ -61,8 +60,7 @@ const styles = StyleSheet.create({
   valueText: {
     color: "black",
     fontSize: 16,
-    fontFamily: "Inter",
-    fontWeight: "500",
+    fontFamily: "Inter_500Medium",
   },
 });
 

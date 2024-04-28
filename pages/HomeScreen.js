@@ -5,7 +5,7 @@ import cafeData from "../components/cafeData";
 import Header from "../components/Header";
 import BottomSheetModal from "../components/BottomSheetModal"; 
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [selectedCafe, setSelectedCafe] = useState(null);
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -32,6 +32,7 @@ const HomeScreen = () => {
           onSwipeComplete={() => setModalVisible(false)}
           cafe={selectedCafe}
           key={selectedCafe.name}
+          navigation={navigation}
         />
       )}
     </View>

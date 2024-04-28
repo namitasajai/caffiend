@@ -34,8 +34,7 @@ const styles = StyleSheet.create({
   noteInput: {
     color: "#8F8F8F",
     fontSize: 20,
-    fontFamily: "Inter",
-    fontWeight: "500",
+    fontFamily: "Inter_500Medium",
     textAlignVertical: "top", // Ensures text aligns at the top of the input
     width: "100%",
     borderWidth: 0,

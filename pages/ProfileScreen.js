@@ -5,9 +5,8 @@ import AddPhotoComponent from "../components/AddPhoto";
 import QuestionComponent from "../components/Question";
 import AddFavoriteDishesComponent from "../components/AddFavoriteDishes";
 import NoteComponent from "../components/NoteComponent";
-import BackBtnHeader from "../components/BackBtnHeader";
 
-const ReviewScreen = ({ cafe }) => (
+const ProfileScreen = () => (
   <View
     style={{
       flex: 1,
@@ -18,7 +17,6 @@ const ReviewScreen = ({ cafe }) => (
       backgroundColor: "#FBF8F1",
     }}
   >
-    <BackBtnHeader cafe={cafe} />
     <SliderComponent />
     <AddPhotoComponent />
     <QuestionComponent />
@@ -27,4 +25,4 @@ const ReviewScreen = ({ cafe }) => (
   </View>
 );
 
-export default ReviewScreen;
+export default ProfileScreen;

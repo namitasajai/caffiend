@@ -38,8 +38,7 @@ const styles = StyleSheet.create({
   label: {
     color: "#000000",
     fontSize: 14,
-    fontFamily: "Inter",
-    fontWeight: "300",
+    fontFamily: "Inter_300Light",
     lineHeight: 18.29,
     marginRight: 16, // Add space between the label and the plus icon
   },

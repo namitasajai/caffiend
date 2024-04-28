@@ -21,7 +21,7 @@ import {
   PlusCircle,
 } from "phosphor-react-native";
 
-const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe }) => {
+const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
   return (
     <Modal
       isVisible={isVisible}
@@ -35,7 +35,7 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe }) => {
         <TouchableOpacity style={styles.closeBtn} onPress={onSwipeComplete}>
           <CaretDown size={32} color="#000" weight="thin" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.reviewBtn}>
+        <TouchableOpacity style={styles.reviewBtn} onPress={() => navigation.navigate('ReviewScreen', {cafe})}>
             <Text style={styles.reviewBtnText}>Leave a Review</Text>
           </TouchableOpacity>
         <View style={styles.contentContainer}>

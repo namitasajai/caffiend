@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
   },
   rating: {
     fontSize: 16,
-    fontWeight: "bold",
     fontFamily: "Inter_700Bold",
     color: "#E58D23",
   },
