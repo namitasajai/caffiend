@@ -1,28 +1,37 @@
+// ProfileScreen.js
 import React from "react";
-import { View } from "react-native";
-import SliderComponent from "../components/Slider";
-import AddPhotoComponent from "../components/AddPhoto";
-import QuestionComponent from "../components/Question";
-import AddFavoriteDishesComponent from "../components/AddFavoriteDishes";
-import NoteComponent from "../components/NoteComponent";
+import { ScrollView, StyleSheet, View, SafeAreaView } from "react-native";
+import ProfileHeader from "../components/ProfileHeader"; // Update the import path as necessary
 
-const ProfileScreen = () => (
-  <View
-    style={{
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 40, // This will push everything down a bit
-      gap: 20,
-      backgroundColor: "#FBF8F1",
-    }}
-  >
-    <SliderComponent />
-    <AddPhotoComponent />
-    <QuestionComponent />
-    <AddFavoriteDishesComponent />
-    <NoteComponent />
-  </View>
-);
+const ProfileScreen = () => {
+  const userName = "Sabine Mejia";
+  const userHandle = "@sa_bean";
+  const userProfileImg = require("../assets/sabines-pfp.jpeg"); // Update path if necessary
+
+  return (
+    <View style={styles.container}>
+      <ProfileHeader
+        userName={userName}
+        userHandle={userHandle}
+        userProfileImg={userProfileImg}
+      />
+      <ScrollView style={styles.scrollView}>
+        {/* Your scrollable content */}
+      </ScrollView>
+      {/* Rest of your code */}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#FBF8F1",
+  },
+  scrollView: {
+    flex: 1,
+  },
+  // Add any additional styles if necessary
+});
 
 export default ProfileScreen;
