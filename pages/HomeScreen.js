@@ -1,28 +1,53 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import CafeCard from "../components/CafeCard";
 import cafeData from "../components/cafeData";
 import Header from "../components/Header";
-import BottomSheetModal from "../components/BottomSheetModal"; 
+import BottomSheetModal from "../components/BottomSheetModal";
 
 const HomeScreen = ({ navigation }) => {
   const [selectedCafe, setSelectedCafe] = useState(null);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleCafePress = (cafe) => {
     setSelectedCafe(cafe);
-    console.log(cafe); 
     setModalVisible(true);
   };
 
+  const handleSearchChange = (query) => {
+    console.log(query);
+    setSearchQuery(query);
+  };
+
+  const filteredCafeData = cafeData.filter(
+    (cafe) => cafe.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    console.log(searchQuery.toLowerCase)
+  );
+
   return (
     <View style={styles.container}>
-      <Header title="Location" />
+      <Header
+        title="Location"
+        searchValue={searchQuery}
+        onSearchChange={handleSearchChange}
+      />
       <ScrollView style={styles.scrollView}>
         <Text style={styles.title}>Near You</Text>
         <View style={styles.cardContainer}>
-          {cafeData.map((cafe, index) => (
-              <CafeCard key={index} cafe={cafe} handleCafePress={handleCafePress} />
+          console.log(filteredCafeData)
+          {filteredCafeData.map((cafe, index) => (
+            <CafeCard
+              key={index}
+              cafe={cafe}
+              onPress={() => handleCafePress(cafe)}
+            />
           ))}
         </View>
       </ScrollView>
@@ -31,7 +56,6 @@ const HomeScreen = ({ navigation }) => {
           isVisible={isModalVisible}
           onSwipeComplete={() => setModalVisible(false)}
           cafe={selectedCafe}
-          key={selectedCafe.name}
           navigation={navigation}
         />
       )}
@@ -43,20 +67,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     fontFamily: "Inter_400Regular",
-    backgroundColor: "#FBF8F1", // Use the background color that suits your theme
+    backgroundColor: "#FBF8F1",
   },
   title: {
     fontSize: 26,
     fontFamily: "Inter_400Regular",
     color: "#333333",
-    marginHorizontal: 0, // Provides horizontal space
-    marginTop: 18, // Provides space from the top
+    marginHorizontal: 0,
+    marginTop: 18,
   },
   scrollView: {
-    paddingHorizontal: 18, // Provides horizontal space
+    paddingHorizontal: 18,
   },
   cardContainer: {
-    marginVertical: 12, // Provides vertical space between cards
+    marginVertical: 12,
   },
 });
 
