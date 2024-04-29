@@ -10,18 +10,18 @@ import {
 } from "react-native";
 import { MapPin, MagnifyingGlass, FunnelSimple } from "phosphor-react-native";
 
-const Header = ({title}) => {
+const Header = ({ title, searchValue, onSearchChange }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.statusBarPlaceholder} />
-      <Text style={styles.title}>{title}</Text>
-      <View style={styles.locationContainer}>
-        <MapPin size={18} color="#333" weight="bold" />
-        <Text style={styles.locationText}>New York, NY, USA</Text>
-      </View>
+      {/* ... other parts of the Header */}
       <View style={styles.searchContainer}>
         <MagnifyingGlass size={20} color="#666" />
-        <TextInput placeholder="Search" style={styles.searchInput} />
+        <TextInput
+          placeholder="Search cafes"
+          style={styles.searchInput}
+          value={searchValue}
+          onChangeText={onSearchChange} // This is where you handle the text change
+        />
         <TouchableOpacity style={styles.filterBtn}>
           <FunnelSimple size={13} color="#666" />
         </TouchableOpacity>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#666",
     borderRadius: 100,
-    padding: 4, 
+    padding: 4,
   },
   searchContainer: {
     flexDirection: "row",
