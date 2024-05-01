@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { MapPin, MagnifyingGlass, FunnelSimple } from "phosphor-react-native";
 
-const Header = ({title}) => {
+const Header = ({ title, searchValue, onSearchChange, onFilterPress }) => {
   return (
     <View style={styles.container}>
       <View style={styles.statusBarPlaceholder} />
@@ -21,8 +21,13 @@ const Header = ({title}) => {
       </View>
       <View style={styles.searchContainer}>
         <MagnifyingGlass size={20} color="#666" />
-        <TextInput placeholder="Search" style={styles.searchInput} />
-        <TouchableOpacity style={styles.filterBtn}>
+        <TextInput
+          style={styles.searchInput}
+          value={searchValue}
+          onChangeText={onSearchChange} // Make sure this is connected
+          placeholder="Search"
+        />
+        <TouchableOpacity style={styles.filterBtn} onPress={onFilterPress}>
           <FunnelSimple size={13} color="#666" />
         </TouchableOpacity>
       </View>
@@ -64,7 +69,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#666",
     borderRadius: 100,
-    padding: 4, 
+    padding: 4,
   },
   searchContainer: {
     flexDirection: "row",

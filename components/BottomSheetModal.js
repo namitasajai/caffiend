@@ -35,7 +35,12 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
           style={styles.reviewBtn}
           onPress={() => {
             console.log(cafe); // Debug: Log the cafe object
-            navigation.navigate("ReviewScreen", { cafe: cafe, isVisible: isVisible, onSwipeComplete: onSwipeComplete, navigation: navigation});
+            navigation.navigate("ReviewScreen", {
+              cafe: cafe,
+              isVisible: isVisible,
+              onSwipeComplete: onSwipeComplete,
+              navigation: navigation,
+            });
           }}
         >
           <Text style={styles.reviewBtnText}>Leave a Review</Text>

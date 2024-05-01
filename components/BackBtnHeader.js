@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { CaretLeft } from "phosphor-react-native";
 
 const BackBtnHeader = ({ cafe }) => {
@@ -17,7 +12,6 @@ const BackBtnHeader = ({ cafe }) => {
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -41,7 +35,7 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_500Medium",
     marginTop: 36,
     marginBottom: 2,
-  }
+  },
 });
 
 export default BackBtnHeader;
