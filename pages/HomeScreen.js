@@ -41,7 +41,7 @@ const HomeScreen = ({ navigation }) => {
       <ScrollView style={styles.scrollView}>
         <Text style={styles.title}>Near You</Text>
         <View style={styles.cardContainer}>
-          console.log(filteredCafeData)
+          {/* console.log(filteredCafeData) */}
           {filteredCafeData.map((cafe, index) => (
             <CafeCard
               key={index}
