@@ -1,4 +1,3 @@
-
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Heart, ChatCircle } from "phosphor-react-native";
@@ -12,7 +11,9 @@ const ReviewCard = () => {
       <View style={styles.topSection}>
         <Image
           style={styles.avatar}
-          source={{ uri: "https://i.pinimg.com/564x/bb/8a/91/bb8a91a047deaa78f7a89228f80d92da.jpg" }}
+          source={{
+            uri: "https://i.pinimg.com/564x/bb/8a/91/bb8a91a047deaa78f7a89228f80d92da.jpg",
+          }}
         />
         <View>
           <Text style={styles.userName}>
@@ -33,7 +34,9 @@ const ReviewCard = () => {
           {/* Repeat Image component for as many photos as you need */}
           <Image
             style={styles.photo}
-            source={{ uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg" }}
+            source={{
+              uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
+            }}
           />
           {/* ... */}
         </View>
