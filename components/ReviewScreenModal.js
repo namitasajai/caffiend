@@ -14,9 +14,7 @@ import {
   PlusCircle,
 } from "phosphor-react-native";
 
-const ReviewScreen = ({ route }) => {
-  const { cafe, isVisible, onSwipeComplete, navigation } = route.params;
-
+const ReviewScreenModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
   return (
     <Modal
       isVisible={isVisible}
@@ -34,7 +32,7 @@ const ReviewScreen = ({ route }) => {
           style={styles.reviewBtn}
           onPress={() => {
             console.log(cafe); // Debug: Log the cafe object
-            navigation.navigate("ReviewScreen", { cafe: cafe });
+            navigation.navigate("ReviewScreen", { cafe: cafe, isVisible: isVisible, onSwipeComplete: onSwipeComplete, navigation: navigation});
           }}
         >
           <Text style={styles.reviewBtnText}>Leave a Review</Text>
@@ -332,4 +330,4 @@ const styles = StyleSheet.create({
   // ... additional styles for other elements
 });
 
-export default ReviewScreen;
+export default ReviewScreenModal;

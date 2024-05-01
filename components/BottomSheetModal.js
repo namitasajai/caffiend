@@ -4,22 +4,18 @@ import Modal from "react-native-modal";
 import {
   Heart,
   CurrencyDollar,
-  MapPin,
-  Clock,
-  ChatCircle,
-  Phone,
   WifiHigh,
   ForkKnife,
   Coffee,
-  Mug,
-  Plus,
   CopySimple,
   CaretDown,
   CaretRight,
-  CaretUp,
   ArrowElbowUpRight,
   PlusCircle,
 } from "phosphor-react-native";
+import RatingSlider from "./ReviewPage/StarRating";
+import FriendSelector from "./ReviewPage/FriendSelector";
+import AddPhoto from "./ReviewPage/AddPhoto";
 
 const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
   return (
@@ -35,9 +31,16 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
         <TouchableOpacity style={styles.closeBtn} onPress={onSwipeComplete}>
           <CaretDown size={32} color="#000" weight="thin" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.reviewBtn} onPress={() => navigation.navigate('ReviewScreen', {cafe})}>
-            <Text style={styles.reviewBtnText}>Leave a Review</Text>
-          </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.reviewBtn}
+          onPress={() => {
+            console.log(cafe); // Debug: Log the cafe object
+            navigation.navigate("ReviewScreen", { cafe: cafe, isVisible: isVisible, onSwipeComplete: onSwipeComplete, navigation: navigation});
+          }}
+        >
+          <Text style={styles.reviewBtnText}>Leave a Review</Text>
+        </TouchableOpacity>
+
         <View style={styles.contentContainer}>
           <View style={styles.infoContainer}>
             <Text style={styles.name}>{cafe.name}</Text>
@@ -50,6 +53,9 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
               <PlusCircle size={30} color="#666" weight="thin" />
             </TouchableOpacity>
           </View>
+          <RatingSlider />
+          <FriendSelector />
+          <AddPhoto />
           <View style={styles.infoContainer}>
             <Text style={styles.distance}>{cafe.distance} miles</Text>
             <Coffee size={16} color="#333333" />
@@ -148,8 +154,6 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
             <Text style={styles.infoBoxText}>Sat-Sun: 8:00am - 5:00pm</Text>
           </View>
           <Text style={styles.dividerHeader}> Know Before You Go </Text>
-
-          
         </View>
         {/* Add other elements like address, hours, review button, etc. */}
       </View>
@@ -188,7 +192,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
-    position: "absolute", 
+    position: "absolute",
     bottom: 30,
     zIndex: 1,
   },
@@ -302,7 +306,7 @@ const styles = StyleSheet.create({
   },
   infoBoxBtnContainer: {
     flexDirection: "row",
-    gap: 6, 
+    gap: 6,
   },
   infoBoxBtn: {
     backgroundColor: "#96A978",
@@ -316,7 +320,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Inter_500Medium",
     color: "#333333",
-    marginBottom: 2, 
+    marginBottom: 2,
   },
   dividerHeader: {
     fontSize: 20,
