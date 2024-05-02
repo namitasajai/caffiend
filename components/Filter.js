@@ -68,15 +68,15 @@ const styles = StyleSheet.create({
     modalOverlay: {
       flex: 1,
       justifyContent: "center",
-      alignItems: "flex-end",
-      paddingRight: 50,
-      paddingBottom: 80,   // Align children views to the right
+      alignItems: "center",
+      //paddingRight: 50,
+      //paddingBottom: 80,   // Align children views to the right
       backgroundColor: "rgba(0, 0, 0, 0.1)", // Semi-transparent background
     },
     modalContent: {
       backgroundColor: "white",
-      borderRadius: 10,
-      padding: 20,
+      borderRadius: 20,
+      padding: 30,
       width: "80%", // Smaller width
       maxWidth: 300, // Ensuring modal isn't too wide on larger devices
     },

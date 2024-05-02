@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { User, ClipboardText, Coffee } from "phosphor-react-native"; // Import icons
+import { Users, ClipboardText, Coffee } from "phosphor-react-native"; // Import icons
 
 const ProfileStats = ({ friends, reviews, beans }) => {
   return (
     <View style={styles.statsContainer}>
       <View style={styles.statItem}>
-        <User size={24} color="#333" />
+        <Users size={24} color="#333" />
         <Text style={styles.statText}>{friends} friends</Text>
       </View>
       <View style={styles.statItem}>
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "#F0EDEE", // The background color of your component
+    backgroundColor: "#F6F0E3", // The background color of your component
     borderRadius: 25, // Adjust as necessary
     paddingVertical: 10, // Adjust as necessary
     paddingHorizontal: 20, // Adjust as necessary
