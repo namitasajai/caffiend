@@ -1,62 +1,93 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   StyleSheet,
   Image,
   TouchableOpacity,
-  ScrollView,
   Text,
+  Animated,
 } from "react-native";
 import Modal from "react-native-modal";
 import { CaretDown } from "phosphor-react-native";
+import {
+  PanGestureHandler,
+  State,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
 import CafePage from "./CafePage";
 import ReviewView from "./ReviewView";
 
 const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
-  const [isScrolling, setIsScrolling] = useState(false);
   const [activeView, setActiveView] = useState("cafeView");
+  const translateY = useRef(new Animated.Value(0)).current;
 
-  const renderContent = () => {
-    switch (activeView) {
-      case "rateExperience":
-        return <ReviewView cafe={cafe} setActiveView={setActiveView} />;
-      case "cafeView":
-        return <CafePage cafe={cafe} />;
-      default:
-        return <CafePage cafe={cafe} />;
+  const onGestureEvent = Animated.event(
+    [{ nativeEvent: { translationY: translateY } }],
+    { useNativeDriver: true }
+  );
+
+  const onHandlerStateChange = (event) => {
+    if (event.nativeEvent.oldState === State.ACTIVE) {
+      let { translationY } = event.nativeEvent;
+      translateY.setValue(0); // Reset translationY
+      if (translationY > 100) {
+        // Threshold to decide closing
+        onSwipeComplete();
+      } else {
+        Animated.spring(translateY, {
+          toValue: 0,
+          tension: 200,
+          friction: 12,
+          useNativeDriver: true,
+        }).start();
+      }
     }
   };
 
   return (
-    <Modal
-      isVisible={isVisible}
-      onSwipeComplete={onSwipeComplete}
-      onBackdropPress={onSwipeComplete}
-      swipeDirection={["down"]}
-      swipeThreshold={100}
-      style={styles.bottomModal}
-    >
-      <View style={styles.content}>
-        <Image source={{ uri: cafe.imageUrl }} style={styles.image} />
-        <TouchableOpacity
-          style={styles.closeBtn}
-          onPress={() => onSwipeComplete()}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Modal
+        isVisible={isVisible}
+        onBackdropPress={onSwipeComplete}
+        style={styles.bottomModal}
+        useNativeDriver={true}
+        onSwipeComplete={onSwipeComplete}
+      >
+        <PanGestureHandler
+          onGestureEvent={onGestureEvent}
+          onHandlerStateChange={onHandlerStateChange}
         >
-          <CaretDown size={32} color="#000" weight="thin" />
-        </TouchableOpacity>
-        {renderContent()}
-      </View>
-      {activeView === "cafeView" && (
-        <TouchableOpacity
-          style={styles.reviewBtn}
-          onPress={() => {
-            setActiveView("rateExperience");
-          }}
-        >
-          <Text style={styles.reviewBtnText}>Leave a Review</Text>
-        </TouchableOpacity>
-      )}
-    </Modal>
+          <Animated.View
+            style={[
+              styles.content,
+              {
+                transform: [{ translateY }],
+              },
+            ]}
+          >
+            <Image source={{ uri: cafe.imageUrl }} style={styles.image} />
+            <TouchableOpacity style={styles.closeBtn} onPress={onSwipeComplete}>
+              <CaretDown size={32} color="#000" weight="thin" />
+            </TouchableOpacity>
+            {activeView === "cafeView" ? (
+              <CafePage cafe={cafe} />
+            ) : (
+              <ReviewView cafe={cafe} setActiveView={setActiveView} />
+            )}
+            {activeView === "cafeView" && (
+              <TouchableOpacity
+                style={styles.reviewBtn}
+                onPress={() => {
+                  setActiveView("rateExperience");
+                }}
+              >
+                <Text style={styles.reviewBtnText}>Leave a Review</Text>
+              </TouchableOpacity>
+            )}
+          </Animated.View>
+        </PanGestureHandler>
+      </Modal>
+    </GestureHandlerRootView>
   );
 };
 
