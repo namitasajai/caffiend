@@ -8,7 +8,7 @@ import {
   Text,
 } from "react-native";
 import Modal from "react-native-modal";
-import { CaretDown, CaretLeft } from "phosphor-react-native";
+import { CaretDown } from "phosphor-react-native";
 import CafePage from "./CafePage";
 import ReviewView from "./ReviewView";
 
@@ -21,41 +21,19 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
       case "rateExperience":
         return <ReviewView cafe={cafe} setActiveView={setActiveView} />;
       case "cafeView":
-        return <CafePage cafe={cafe} setActiveView={setActiveView} />;
+        return <CafePage cafe={cafe} />;
       default:
-        return <CafePage cafe={cafe} setActiveView={setActiveView} />;
+        return <CafePage cafe={cafe} />;
     }
   };
-  // const handleButtonPress = () => {
-  //   if (activeView === "rateExperience") {
-  //     setActiveView("cafeView"); // Change to your default view name
-  //   } else {
-  //     onSwipeComplete();
-  //   }
-  // };
 
-  // const getButtonIcon = () => {
-  //   if (activeView === "rateExperience") {
-  //     return <CaretLeft size={32} color="#000" weight="thin" />;
-  //   } else {
-  //     return <CaretDown size={32} color="#000" weight="thin" />;
-  //   }
-  // };
-
-  const handleScrollBegin = () => {
-    setIsScrolling(true);
-  };
-
-  const handleScrollEnd = () => {
-    setIsScrolling(false);
-  };
   return (
     <Modal
       isVisible={isVisible}
       onSwipeComplete={onSwipeComplete}
       onBackdropPress={onSwipeComplete}
-      // swipeDirection={["down"]}
-      // swipeThreshold={100}
+      swipeDirection={["down"]}
+      swipeThreshold={100}
       style={styles.bottomModal}
     >
       <View style={styles.content}>
@@ -66,15 +44,7 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
         >
           <CaretDown size={32} color="#000" weight="thin" />
         </TouchableOpacity>
-        <ScrollView
-          onScrollBeginDrag={handleScrollBegin}
-          onScrollEndDrag={handleScrollEnd}
-          onMomentumScrollBegin={handleScrollBegin}
-          onMomentumScrollEnd={handleScrollEnd}
-          style={styles.scrollView}
-        >
-          {renderContent()}
-        </ScrollView>
+        {renderContent()}
       </View>
       {activeView === "cafeView" && (
         <TouchableOpacity

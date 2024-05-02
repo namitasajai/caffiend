@@ -1,5 +1,11 @@
 import React from "react";
-import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import StarRating from "./ReviewPage/StarRating";
 import FriendSelector from "./ReviewPage/FriendSelector";
 import AddPhoto from "./ReviewPage/AddPhoto";
@@ -8,32 +14,57 @@ import CommentBox from "./ReviewPage/CommentBox";
 import { CaretLeft } from "phosphor-react-native";
 
 const ReviewView = ({ cafe, setActiveView }) => {
+  // Create a list of items to render in the FlatList
+  const data = [{ id: "header", type: "header" }];
+
+  // Render different components based on the item type
+  const renderItem = ({ item }) => {
+    if (item.type === "header") {
+      return (
+        <>
+          <View style={styles.flexBox}>
+            <TouchableOpacity
+              style={styles.closeBtn}
+              onPress={() => setActiveView("cafeView")}
+            >
+              <CaretLeft size={24} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.name}>{cafe.name}</Text>
+          </View>
+          <Text style={styles.reviewHeading}>Rate your experience</Text>
+          <StarRating />
+          <Text style={styles.reviewHeading}>Who did you go with? </Text>
+        </>
+      );
+    } else {
+      return null; // Placeholder for potentially more types
+    }
+  };
+
   return (
-    <View style={styles.contentContainer}>
-      <View style={styles.flexBox}>
-        <TouchableOpacity
-          style={styles.closeBtn}
-          onPress={() => setActiveView("cafeView")}
-        >
-          <CaretLeft size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.name}>{cafe.name}</Text>
-      </View>
-      <Text style={styles.reviewHeading}>Rate your experience</Text>
-      <StarRating />
-      <Text style={styles.reviewHeading}>Who did you go with? </Text>
-      <FriendSelector />
-      <Text style={styles.reviewHeading}>Add photos </Text>
-      <AddPhoto />
-      <Text style={styles.reviewHeading}>Select all that apply </Text>
-      <SelectableButtons />
-      <Text style={styles.reviewHeading}>How did you describe this cafe? </Text>
-      <SelectableButtons />
-      <CommentBox />
-      <TouchableOpacity style={styles.reviewBtn}>
-        <Text style={styles.reviewBtnText}>Post</Text>
-      </TouchableOpacity>
-    </View>
+    <FlatList
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+      style={styles.contentContainer}
+      ListFooterComponent={() => (
+        <>
+          <FriendSelector />
+          <Text style={styles.reviewHeading}>Add photos </Text>
+          <AddPhoto />
+          <Text style={styles.reviewHeading}>Select all that apply </Text>
+          <SelectableButtons />
+          <Text style={styles.reviewHeading}>
+            How did you describe this cafe?{" "}
+          </Text>
+          <SelectableButtons />
+          <CommentBox />
+          <TouchableOpacity style={styles.reviewBtn}>
+            <Text style={styles.reviewBtnText}>Post</Text>
+          </TouchableOpacity>
+        </>
+      )}
+    />
   );
 };
 
@@ -66,7 +97,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     marginVertical: 20,
     width: "100%",
-    marginBottom: 100,
+    marginBottom: 120,
   },
   reviewBtnText: {
     color: "#fff",
@@ -86,8 +117,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    gap: 4, 
-  }, 
+    gap: 4,
+  },
   name: {
     fontSize: 22,
     fontFamily: "Inter_500Medium",

@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 import {
   Heart,
   CurrencyDollar,
@@ -19,10 +13,11 @@ import {
   PlusCircle,
 } from "phosphor-react-native";
 
-const CafePage = ({ cafe, setActiveView }) => {
-
+const CafePage = ({ cafe }) => {
   return (
-    <>
+    <ScrollView
+      style={styles.scrollView}
+    >
       <View style={styles.contentContainer}>
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{cafe.name}</Text>
@@ -134,7 +129,7 @@ const CafePage = ({ cafe, setActiveView }) => {
         </View>
         <Text style={styles.dividerHeader}> Know Before You Go </Text>
       </View>
-    </>
+    </ScrollView>
   );
 };
 
