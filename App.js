@@ -78,7 +78,7 @@ const App = () => {
                   return null;
               }
             },
-            tabBarStyle: { backgroundColor: "#FBF8F1", borderTopWidth: 0 },
+            tabBarStyle: { backgroundColor: "#F6F0E3", borderTopWidth: 0 },
             tabBarActiveTintColor: "#333333",
             tabBarInactiveTintColor: "#333333",
             headerShown: false,

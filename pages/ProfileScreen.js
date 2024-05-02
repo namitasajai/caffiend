@@ -1,7 +1,9 @@
 import React from "react";
-import { ScrollView, StyleSheet, View, Image } from "react-native";
+import { ScrollView, StyleSheet, View, Text, Image } from "react-native";
 import ProfileHeader from "../components/ProfileHeader";
 import ProfileStats from "../components/ProfileStats";
+import CafeSessionCard from "../components/CafeSessionCard";
+import YourReviewCard from "../components/YourReviewCard";
 
 const ProfileScreen = () => {
   const userName = "Sabine Mejia";
@@ -16,37 +18,45 @@ const ProfileScreen = () => {
         userProfileImg={userProfileImg}
       />
       <ProfileStats friends="48" reviews="2" beans="350" />
-      {/* Here's the ProfileStats component */}
-      <ScrollView style={styles.scrollView}>
-        {/* Your scrollable content */}
+      <Text style={styles.sectionHeader}>Your Cafe Sessions</Text>
+      <ScrollView style={styles.scrollView} horizontal={true}>
+        <CafeSessionCard
+          name="B Cup Cafe"
+          distance="5.4 miles"
+          duration="2 hrs"
+          iconSource={require("../assets/sabines-pfp.jpeg")}
+        />
+        <CafeSessionCard
+          name="Daily Brew"
+          distance="1.4 miles"
+          duration="4 hrs"
+          iconSource={require("../assets/sabines-pfp.jpeg")}
+        />
+        <CafeSessionCard
+          name="Latte Land"
+          distance="2.6 miles"
+          duration="1 hr"
+          iconSource={require("../assets/sabines-pfp.jpeg")}
+        />
       </ScrollView>
-      {/* Rest of your code */}
+      <Text style={styles.sectionHeader}>Your Reviews</Text>
+      <ScrollView style={styles.scrollView} horizontal={true}>
+        <YourReviewCard
+          reviewText="Visited B Cup Cafe this morning and loved the vibrant atmosphere! The espresso was robust and the service quick. Their almond croissant is a must-try—flaky and flavorful. A great spot for a quick coffee break!"
+          cafeName="B Cup Cafe"
+          style={{ margin: 20 }}
+        />
+        <YourReviewCard
+          reviewText="Coffee was pretty good! Would not recommend their pastries though.
+          Spend a good 3hrs studying here and had a pretty productive sesh:)
+          Wish me luck for midterms tmrw."
+          cafeName="Elixr Coffee"
+          style={{ margin: 20 }}
+        />
+      </ScrollView>
     </View>
   );
 };
-
-// Styles for UserStats component (Placeholder if you haven't implemented it yet)
-const statsStyles = StyleSheet.create({
-  statsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "#F0EDEE", // The background color of your component
-    borderRadius: 25, // Adjust as necessary
-    paddingVertical: 10, // Adjust as necessary
-    paddingHorizontal: 20, // Adjust as necessary
-    margin: 10, // Adjust as necessary
-  },
-  statItem: {
-    alignItems: "center",
-  },
-  statText: {
-    marginTop: 4,
-    color: "#333",
-    fontWeight: "bold",
-    fontSize: 14,
-  },
-});
 
 const styles = StyleSheet.create({
   container: {
@@ -54,9 +64,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#FBF8F1",
   },
   scrollView: {
-    flex: 1,
+    flexDirection: "row",
   },
-  // ...rest of your styles
+  sectionHeader: {
+    fontSize: 20,
+    fontFamily: "Inter_700Bold",
+    fontWeight: "400",
+    lineHeight: 20,
+    color: "black",
+    padding: 10, // General padding around the headers
+  },
+  // Add or adjust other styles as needed
 });
 
 export default ProfileScreen;
