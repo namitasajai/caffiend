@@ -16,7 +16,7 @@ const ReviewCard = () => {
         />
         <View>
           <Text style={styles.userName}>
-            Madison Waters <Text style={styles.ratedText}>rated</Text>
+            Kayla Simpson <Text style={styles.ratedText}>rated</Text>
           </Text>
           <View style={styles.coffeeShopNameContainer}>
             <Text style={styles.coffeeShopName}>Elixr Coffee</Text>

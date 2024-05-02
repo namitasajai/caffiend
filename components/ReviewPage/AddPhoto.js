@@ -1,7 +1,13 @@
-import * as ImagePicker from 'expo-image-picker';
-import React, { useState } from 'react';
-import { View, TouchableOpacity, Image, FlatList, StyleSheet } from 'react-native';
-import { XCircle, Camera } from 'phosphor-react-native'; // Import Camera if ImageSquare is not intended
+import * as ImagePicker from "expo-image-picker";
+import React, { useState } from "react";
+import {
+  View,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  StyleSheet,
+} from "react-native";
+import { XCircle, Camera } from "phosphor-react-native"; // Import Camera if ImageSquare is not intended
 
 const PhotoSelector = () => {
   const [photos, setPhotos] = useState([]);
@@ -11,18 +17,18 @@ const PhotoSelector = () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [4, 4],
       quality: 1,
     });
 
     if (!result.cancelled) {
-      // Process the selected image and add it to the photos state
-      setPhotos([...photos, { uri: result.uri }]);
+      console.log(result.assets[0].uri); // Log the URI to ensure it's correct
+      setPhotos([...photos, { uri: result.assets[0].uri}]);
     }
   };
 
   const handleDeletePhoto = (uri) => {
-    setPhotos(photos.filter(photo => photo.uri !== uri));
+    setPhotos(photos.filter((photo) => photo.uri !== uri));
   };
 
   return (
@@ -32,16 +38,23 @@ const PhotoSelector = () => {
         horizontal
         renderItem={({ item }) => (
           <View style={styles.photoContainer}>
-            <Image source={{ uri: item.uri }} style={styles.image} />
-            <TouchableOpacity style={styles.deleteButton} onPress={() => handleDeletePhoto(item.uri)}>
-              <XCircle size={24} color="gray" />
+            <Image
+              source={{ uri: item.uri }}
+              style={styles.image}
+              onError={(e) => console.log('Failed to load image:', e.nativeEvent.error)}
+            />
+            <TouchableOpacity
+              style={styles.deleteButton}
+              onPress={() => handleDeletePhoto(item.uri)}
+            >
+              <XCircle size={24} color="#333333" weight="fill"/>
             </TouchableOpacity>
           </View>
         )}
-        keyExtractor={(item, index) => item.uri + index}  // Ensure unique key in case of duplicate URIs
+        keyExtractor={(item, index) => item.uri + index}
         ListHeaderComponent={() => (
           <TouchableOpacity style={styles.addButton} onPress={handleAddPhoto}>
-            <Camera size={24} color="#6B4A28" /> 
+            <Camera size={24} color="#6B4A28" />
           </TouchableOpacity>
         )}
         showsHorizontalScrollIndicator={false}
@@ -52,31 +65,30 @@ const PhotoSelector = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
+    flexDirection: "row",
+    alignItems: "center",
   },
   photoContainer: {
-    position: 'relative',
+    position: "relative",
     marginRight: 10,
   },
   image: {
-    width: 50,
-    height: 50,
+    width: 100,
+    height: 100,
     borderRadius: 10,
   },
   deleteButton: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
+    position: "absolute",
+    top: 2,
+    right: 2,
   },
   addButton: {
-    width: 50,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 10,
-    backgroundColor: '#D0D0D0',
+    backgroundColor: "#B69D84",
     marginRight: 10,
   },
 });

@@ -1,92 +1,39 @@
-import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  Text,
-} from "react-native";
-import Modal from "react-native-modal";
-import { CaretDown, CaretLeft } from "phosphor-react-native";
-import CafePage from "./CafePage";
-import ReviewView from "./ReviewView";
+import React from "react";
+import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
+import StarRating from "./ReviewPage/StarRating";
+import FriendSelector from "./ReviewPage/FriendSelector";
+import AddPhoto from "./ReviewPage/AddPhoto";
+import SelectableButtons from "./ReviewPage/SelectableButtons";
+import CommentBox from "./ReviewPage/CommentBox";
+import { CaretLeft } from "phosphor-react-native";
 
-const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [activeView, setActiveView] = useState("cafeView");
-
-  const renderContent = () => {
-    switch (activeView) {
-      case "rateExperience":
-        return <ReviewView cafe={cafe} setActiveView={setActiveView} />;
-      case "cafeView":
-        return <CafePage cafe={cafe} setActiveView={setActiveView} />;
-      default:
-        return <CafePage cafe={cafe} setActiveView={setActiveView} />;
-    }
-  };
-  // const handleButtonPress = () => {
-  //   if (activeView === "rateExperience") {
-  //     setActiveView("cafeView"); // Change to your default view name
-  //   } else {
-  //     onSwipeComplete();
-  //   }
-  // };
-
-  // const getButtonIcon = () => {
-  //   if (activeView === "rateExperience") {
-  //     return <CaretLeft size={32} color="#000" weight="thin" />;
-  //   } else {
-  //     return <CaretDown size={32} color="#000" weight="thin" />;
-  //   }
-  // };
-
-  const handleScrollBegin = () => {
-    setIsScrolling(true);
-  };
-
-  const handleScrollEnd = () => {
-    setIsScrolling(false);
-  };
+const ReviewView = ({ cafe, setActiveView }) => {
   return (
-    <Modal
-      isVisible={isVisible}
-      onSwipeComplete={onSwipeComplete}
-      onBackdropPress={onSwipeComplete}
-      // swipeDirection={["down"]}
-      // swipeThreshold={100}
-      style={styles.bottomModal}
-    >
-      <View style={styles.content}>
-        <Image source={{ uri: cafe.imageUrl }} style={styles.image} />
+    <View style={styles.contentContainer}>
+      <View style={styles.flexBox}>
         <TouchableOpacity
           style={styles.closeBtn}
-          onPress={() => onSwipeComplete()}
+          onPress={() => setActiveView("cafeView")}
         >
-          <CaretDown size={32} color="#000" weight="thin" />
+          <CaretLeft size={24} color="#000" />
         </TouchableOpacity>
-        <ScrollView
-          onScrollBeginDrag={handleScrollBegin}
-          onScrollEndDrag={handleScrollEnd}
-          onMomentumScrollBegin={handleScrollBegin}
-          onMomentumScrollEnd={handleScrollEnd}
-          style={styles.scrollView}
-        >
-          {renderContent()}
-        </ScrollView>
+        <Text style={styles.name}>{cafe.name}</Text>
       </View>
-      {activeView === "cafeView" && (
-        <TouchableOpacity
-          style={styles.reviewBtn}
-          onPress={() => {
-            setActiveView("rateExperience");
-          }}
-        >
-          <Text style={styles.reviewBtnText}>Leave a Review</Text>
-        </TouchableOpacity>
-      )}
-    </Modal>
+      <Text style={styles.reviewHeading}>Rate your experience</Text>
+      <StarRating />
+      <Text style={styles.reviewHeading}>Who did you go with? </Text>
+      <FriendSelector />
+      <Text style={styles.reviewHeading}>Add photos </Text>
+      <AddPhoto />
+      <Text style={styles.reviewHeading}>Select all that apply </Text>
+      <SelectableButtons />
+      <Text style={styles.reviewHeading}>How did you describe this cafe? </Text>
+      <SelectableButtons />
+      <CommentBox />
+      <TouchableOpacity style={styles.reviewBtn}>
+        <Text style={styles.reviewBtnText}>Post</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -102,14 +49,9 @@ const styles = StyleSheet.create({
     maxHeight: "90%",
   },
   closeBtn: {
-    alignSelf: "left",
-    position: "absolute",
-    top: 20,
-    left: 20,
-    width: 40,
-    height: 40,
+    width: 20,
+    height: 20,
     borderRadius: 100,
-    backgroundColor: "#96A978",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -121,9 +63,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
-    position: "absolute",
-    bottom: 30,
     zIndex: 1,
+    marginVertical: 20,
+    width: "100%",
+    marginBottom: 100,
   },
   reviewBtnText: {
     color: "#fff",
@@ -139,6 +82,12 @@ const styles = StyleSheet.create({
   contentContainer: {
     padding: 20,
   },
+  flexBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    gap: 4, 
+  }, 
   name: {
     fontSize: 22,
     fontFamily: "Inter_500Medium",
@@ -252,10 +201,11 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   reviewHeading: {
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: "Inter_500Medium",
     color: "#333333",
     marginVertical: 10,
+    marginTop: 15,
   },
   dividerHeader: {
     fontSize: 20,
@@ -268,7 +218,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#e0e0e0",
     marginVertical: 10,
   },
-  // ... additional styles for other elements
 });
 
-export default BottomSheetModal;
+export default ReviewView;
