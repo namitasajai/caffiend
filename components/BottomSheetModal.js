@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import {
-  View,
   StyleSheet,
   Image,
   TouchableOpacity,
