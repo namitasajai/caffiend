@@ -1,5 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Linking,
+  Platform,
+} from "react-native";
 import {
   Heart,
   CurrencyDollar,
@@ -14,10 +23,17 @@ import {
 } from "phosphor-react-native";
 
 const CafePage = ({ cafe }) => {
+  const openDirections = () => {
+    const encodedAddress = encodeURIComponent(cafe.address); // Ensure the address is URL-encoded
+    const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
+    const url = `${scheme}?q=${encodedAddress}`;
+    Linking.openURL(url).catch((err) =>
+      console.error("An error occurred", err)
+    );
+  };
+
   return (
-    <ScrollView
-      style={styles.scrollView}
-    >
+    <ScrollView style={styles.scrollView}>
       <View style={styles.contentContainer}>
         <View style={styles.infoContainer}>
           <Text style={styles.name}>{cafe.name}</Text>
@@ -57,7 +73,10 @@ const CafePage = ({ cafe }) => {
               color="#666"
             />
           </View>
-          <TouchableOpacity style={styles.directionsButton}>
+          <TouchableOpacity
+            style={styles.directionsButton}
+            onPress={() => openDirections()}
+          >
             <ArrowElbowUpRight size={16} color="#FFFFFF" weight="bold" />
             <Text style={styles.directionsText}>Directions</Text>
           </TouchableOpacity>
