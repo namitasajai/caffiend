@@ -25,9 +25,12 @@ import {
   BatteryLow,
 } from "phosphor-react-native";
 import StartSessionModal from "./StartSessionModal";
+import { useNavigation } from "@react-navigation/native";
 
 const CafePage = ({ cafe, setActiveView }) => {
+  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+
   const openDirections = () => {
     const encodedAddress = encodeURIComponent(cafe.address); // Ensure the address is URL-encoded
     const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
@@ -124,53 +127,31 @@ const CafePage = ({ cafe, setActiveView }) => {
             <Text style={styles.seshBtnText}>Start a Cafe Session</Text>
           </TouchableOpacity>
           <View style={styles.photoContainer}>
-            <Image
-              style={styles.photo}
-              source={{
-                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-              }}
-            />
-            <Image
-              style={styles.photo}
-              source={{
-                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-              }}
-            />
-            <Image
-              style={styles.photo}
-              source={{
-                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-              }}
-            />
-            <Image
-              style={styles.photo}
-              source={{
-                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-              }}
-            />
-            <Image
-              style={styles.photo}
-              source={{
-                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-              }}
-            />
-            <Image
-              style={styles.photo}
-              source={{
-                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-              }}
-            />
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {[1, 2, 3, 4, 5, 6].map((index) => (
+                <Image
+                  key={index}
+                  style={styles.photo}
+                  source={{
+                    uri: `https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg`,
+                  }}
+                />
+              ))}
+            </ScrollView>
           </View>
           <View style={styles.infoBox}>
             <View style={styles.infoBoxHeader}>
               <Text style={styles.infoBoxTitle}>Address</Text>
               <View style={styles.infoBoxBtnContainer}>
-                <View style={styles.infoBoxBtn}>
+                <TouchableOpacity style={styles.infoBoxBtn}>
                   <CopySimple size={20} color="#FFF" />
-                </View>
-                <View style={styles.infoBoxBtn}>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.infoBoxBtn}
+                  onPress={() => openDirections()}
+                >
                   <ArrowElbowUpRight size={20} color="#FFF" />
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
             <Text style={styles.infoBoxText}>3675 Market St,</Text>
@@ -200,6 +181,7 @@ const CafePage = ({ cafe, setActiveView }) => {
         onClose={() => setModalVisible(false)}
         onStart={() => {
           console.log("Session started for", cafe.name);
+          navigation.navigate("Social", { initialTab: "Connect" });
           setModalVisible(false);
         }}
         cafeName={cafe.name}
@@ -356,6 +338,7 @@ const styles = StyleSheet.create({
     width: 113,
     height: 150,
     borderRadius: 10,
+    marginRight: 8,
   },
   infoBox: {
     marginVertical: 10,

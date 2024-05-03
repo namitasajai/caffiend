@@ -7,7 +7,6 @@ import ProfileScreen from "./pages/ProfileScreen";
 import HomeScreen from "./pages/HomeScreen";
 import SocialScreen from "./pages/SocialScreen";
 import FavoritesScreen from "./pages/FavoritesScreen";
-import ReviewScreen from "./pages/ReviewScreen";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as SplashScreen from "expo-splash-screen";
 import {
@@ -26,7 +25,6 @@ function HomeStackScreen() {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
-      <HomeStack.Screen name="ReviewScreen" component={ReviewScreen} />
     </HomeStack.Navigator>
   );
 }

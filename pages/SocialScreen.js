@@ -5,8 +5,8 @@ import HeaderWithBtns from "../components/HeaderWithBtns";
 import PromotionComponent from "../components/PromotionComponent";
 import ConnectCard from "../components/ConnectCard";
 
-const SocialScreen = () => {
-  const [selectedBtn, setSelectedBtn] = useState("Cafés");
+const SocialScreen = ({navigation, route}) => {
+  const [selectedBtn, setSelectedBtn] = useState(route.params?.initialTab || "Cafés");
 
   const renderContent = () => {
     switch (selectedBtn) {
