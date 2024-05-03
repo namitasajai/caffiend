@@ -31,7 +31,6 @@ const ReviewCard = () => {
           Wish me luck for midterms tmrw.
         </Text>
         <View style={styles.photoStrip}>
-          {/* Repeat Image component for as many photos as you need */}
           <Image
             style={styles.photo}
             source={{
@@ -43,7 +42,7 @@ const ReviewCard = () => {
       </View>
 
       <Text style={styles.date}>March 31, 2024 at 3:58pm</Text>
-      {/* Icons or buttons for actions */}
+
       <View style={styles.actionsContainer}>
         <TouchableOpacity style={styles.iconButton}>
           <Heart size={18} color="#CCCCCC" weight="fill" />

@@ -20,6 +20,9 @@ import {
   CaretRight,
   ArrowElbowUpRight,
   PlusCircle,
+  UsersThree, 
+  SpeakerLow, 
+  BatteryLow, 
 } from "phosphor-react-native";
 
 const CafePage = ({ cafe }) => {
@@ -31,6 +34,29 @@ const CafePage = ({ cafe }) => {
       console.error("An error occurred", err)
     );
   };
+
+  const tagData = [
+    {
+      key: "wifi",
+      label: "amazing",
+      icon: <WifiHigh size={24} color={"#FFF"} />,
+    },
+    {
+      key: "busy",
+      label: "busy",
+      icon: <UsersThree size={24} color={"#FFF"} />,
+    },
+    {
+      key: "quiet",
+      label: "quiet",
+      icon: <SpeakerLow size={24} color={"#FFF"} />,
+    },
+    {
+      key: "outlets",
+      label: "some outlets",
+      icon: <BatteryLow size={24} color={"#FFF"} />,
+    },
+  ];
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -147,6 +173,17 @@ const CafePage = ({ cafe }) => {
           <Text style={styles.infoBoxText}>Sat-Sun: 8:00am - 5:00pm</Text>
         </View>
         <Text style={styles.dividerHeader}> Know Before You Go </Text>
+        <View style={styles.infoBoxTags}>
+          {tagData.map((tag) => (
+            <View
+              key={tag.key}
+              style={styles.infoTag}
+            >
+              {tag.icon}
+              <Text style={styles.tagText}>{tag.label}</Text>
+            </View>
+          ))}
+        </View>
       </View>
     </ScrollView>
   );
@@ -229,6 +266,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
   },
+  tagText: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    color: "#FFF",
+    textAlign: "center", 
+    marginTop: 2, 
+  }, 
   distance: {
     fontSize: 12,
     fontFamily: "Inter_400Regular",
@@ -285,6 +329,15 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
   },
+  infoBoxTags: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 10,
+    backgroundColor: "#F0E6D0",
+    padding: 15,
+    borderRadius: 10,
+    alignContent: 'center', 
+  },
   infoBoxTitle: {
     fontSize: 16,
     fontFamily: "Inter_600SemiBold",
@@ -329,6 +382,19 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: "#e0e0e0",
     marginVertical: 10,
+  },
+  tagContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+  },
+  infoTag: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#9E7D5B',
+    padding: 10,
+    borderRadius: 10,
+    width: '23%',
   },
 });
 
