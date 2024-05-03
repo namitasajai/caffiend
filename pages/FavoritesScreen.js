@@ -5,6 +5,7 @@ import cafeData from "../components/cafeData";
 import Header from "../components/Header";
 
 const FavoritesScreen = () => {
+
   const favoritedCafes = cafeData.filter((cafe) => cafe.favorited);
 
   return (

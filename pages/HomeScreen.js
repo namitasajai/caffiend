@@ -59,8 +59,6 @@ const HomeScreen = ({ navigation }) => {
     }));
   };
 
-  
-
   const handleCafePress = (cafe) => {
     setSelectedCafe(cafe);
     setModalVisible(true);

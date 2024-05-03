@@ -17,6 +17,14 @@ import CafePage from "./CafePage";
 import ReviewView from "./ReviewView";
 
 const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
+  
+  const openDirections = () => {
+    const encodedAddress = encodeURIComponent(cafe.address); // Ensure the address is URL-encoded
+    const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
+    const url = `${scheme}?q=${encodedAddress}`;
+    Linking.openURL(url).catch(err => console.error("An error occurred", err));
+  };
+
   const [activeView, setActiveView] = useState("cafeView");
   const translateY = useRef(new Animated.Value(0)).current;
 

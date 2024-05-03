@@ -1,8 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Camera } from "phosphor-react-native";
+import { View, Text, StyleSheet } from "react-native";
 
-const YourReviewCard = ({ reviewText, cafeName }) => {
+const YourReviewCard = ({ reviewText, cafeName, date }) => {
   return (
     <View style={styles.card}>
       <View style={styles.topSection}>
@@ -15,10 +14,7 @@ const YourReviewCard = ({ reviewText, cafeName }) => {
       </View>
       <Text style={styles.reviewText}>{reviewText}</Text>
       <View style={styles.bottomSection}>
-        <Text style={styles.date}>March 31, 2024 at 3:58pm</Text>
-        <TouchableOpacity style={styles.photoIcon}>
-          <Camera size={24} color="#333" />
-        </TouchableOpacity>
+        <Text style={styles.date}>{date}</Text>
       </View>
     </View>
   );
@@ -80,10 +76,6 @@ const styles = StyleSheet.create({
   date: {
     color: "#8F8F8F",
     fontSize: 12,
-  },
-  photoIcon: {
-    alignItems: "center",
-    marginTop: 4,
   },
 });
 

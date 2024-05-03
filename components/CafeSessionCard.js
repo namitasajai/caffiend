@@ -1,8 +1,25 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Linking,
+  Platform,
+} from "react-native";
 import { ArrowElbowUpRight } from "phosphor-react-native";
 
-const CafeSessionCard = ({ name, distance, duration, iconSource }) => {
+const CafeSessionCard = ({ name, address, distance, duration, iconSource }) => {
+  const openDirections = (address) => {
+    const encodedAddress = encodeURIComponent(address); // Ensure the address is URL-encoded
+    const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
+    const url = `${scheme}?q=${encodedAddress}`;
+    Linking.openURL(url).catch((err) =>
+      console.error("An error occurred", err)
+    );
+  };
+
   return (
     <View style={styles.cardContainer}>
       <Text style={styles.cafeName}>{name}</Text>
@@ -10,16 +27,14 @@ const CafeSessionCard = ({ name, distance, duration, iconSource }) => {
         <Text style={styles.cafeDistance}>{distance}</Text>
         <TouchableOpacity
           style={styles.directionsButton}
-          onPress={() => {
-            /* handle directions */
-          }}
+          onPress={() => openDirections(address)}
         >
           <ArrowElbowUpRight size={16} color="#FFFFFF" weight="bold" />
           <Text style={styles.directionsText}>Directions</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.durationContainer}>
-      <Text style={styles.cafeDuration}>{duration}</Text>
+        <Text style={styles.cafeDuration}>{duration}</Text>
         <Image source={iconSource} style={styles.iconStyle} />
       </View>
     </View>
