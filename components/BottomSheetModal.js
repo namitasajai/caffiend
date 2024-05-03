@@ -51,6 +51,14 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
     }
   };
 
+  
+  const openDirections = () => {
+    const encodedAddress = encodeURIComponent(cafe.address); // Ensure the address is URL-encoded
+    const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
+    const url = `${scheme}?q=${encodedAddress}`;
+    Linking.openURL(url).catch(err => console.error("An error occurred", err));
+  };
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Modal
