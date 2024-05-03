@@ -17,13 +17,14 @@ import {
   Coffee,
   CopySimple,
   CaretDown,
-  CaretRight,
+  CaretLeft,
   ArrowElbowUpRight,
   PlusCircle,
   UsersThree,
   SpeakerLow,
   BatteryLow,
 } from "phosphor-react-native";
+import ReviewCard from "./ReviewCard";
 
 const CafePage = ({ cafe, setActiveView }) => {
   const openDirections = () => {
@@ -107,82 +108,15 @@ const CafePage = ({ cafe, setActiveView }) => {
             <Text style={styles.directionsText}>Directions</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.ratingContainer}
-          onPress={() => setActiveView("cafeReviews")}
-        >
+        <TouchableOpacity style={styles.ratingContainer} onPress={() => setActiveView("cafeView")}>
+          <CaretLeft size={16} color="#E58D23" weight="bold" />
           <Text style={styles.rating}>{cafe.rating}</Text>
-          <CaretRight size={16} color="#E58D23" weight="bold" />
         </TouchableOpacity>
-        <View style={styles.photoContainer}>
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-            }}
-          />
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-            }}
-          />
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-            }}
-          />
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-            }}
-          />
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-            }}
-          />
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-            }}
-          />
-        </View>
-        <View style={styles.infoBox}>
-          <View style={styles.infoBoxHeader}>
-            <Text style={styles.infoBoxTitle}>Address</Text>
-            <View style={styles.infoBoxBtnContainer}>
-              <View style={styles.infoBoxBtn}>
-                <CopySimple size={20} color="#FFF" />
-              </View>
-              <View style={styles.infoBoxBtn}>
-                <ArrowElbowUpRight size={20} color="#FFF" />
-              </View>
-            </View>
-          </View>
-          <Text style={styles.infoBoxText}>3675 Market St,</Text>
-          <Text style={styles.infoBoxText}>Philadelphia, PA 19104</Text>
-        </View>
-        <View style={styles.infoBox}>
-          <View style={styles.infoBoxHeader}>
-            <Text style={styles.infoBoxTitle}>Hours</Text>
-            <CaretDown size={20} color="#333333" />
-          </View>
-          <Text style={styles.infoBoxText}>Mon-Fri: 7:00am - 7:00pm</Text>
-          <Text style={styles.infoBoxText}>Sat-Sun: 8:00am - 5:00pm</Text>
-        </View>
-        <Text style={styles.dividerHeader}> Know Before You Go </Text>
-        <View style={styles.infoBoxTags}>
-          {tagData.map((tag) => (
-            <View key={tag.key} style={styles.infoTag}>
-              {tag.icon}
-              <Text style={styles.tagText}>{tag.label}</Text>
-            </View>
-          ))}
+        <View style={styles.reviewContainer}>
+          <ReviewCard />
+          <ReviewCard />
+          <ReviewCard />
+          <ReviewCard />
         </View>
       </View>
     </ScrollView>
@@ -199,6 +133,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     maxHeight: "90%",
+  },
+  reviewContainer: {
+    marginTop: 20,
   },
   closeBtn: {
     alignSelf: "left",

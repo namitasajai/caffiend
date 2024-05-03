@@ -15,6 +15,7 @@ import {
 } from "react-native-gesture-handler";
 import CafePage from "./CafePage";
 import ReviewView from "./ReviewView";
+import CafeReviews from "./CafeReviews"; // Assuming you have a component for cafe reviews
 
 const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
   const [activeView, setActiveView] = useState("cafeView");
@@ -43,6 +44,19 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
     }
   };
 
+  const renderContent = () => {
+    switch (activeView) {
+      case "cafeView":
+        return <CafePage cafe={cafe} setActiveView={setActiveView} />;
+      case "rateExperience":
+        return <ReviewView cafe={cafe} setActiveView={setActiveView} />;
+      case "cafeReviews":
+        return <CafeReviews cafe={cafe} setActiveView={setActiveView} />; // Render the cafeReviews component
+      default:
+        return <CafePage cafe={cafe} setActiveView={setActiveView} />;
+    }
+  };
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Modal
@@ -68,17 +82,20 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
             <TouchableOpacity style={styles.closeBtn} onPress={onSwipeComplete}>
               <CaretDown size={32} color="#000" weight="thin" />
             </TouchableOpacity>
-            {activeView === "cafeView" ? (
-              <CafePage cafe={cafe} />
-            ) : (
-              <ReviewView cafe={cafe} setActiveView={setActiveView} />
-            )}
+            {renderContent()}
             {activeView === "cafeView" && (
               <TouchableOpacity
                 style={styles.reviewBtn}
-                onPress={() => {
-                  setActiveView("rateExperience");
-                }}
+                onPress={() => setActiveView("rateExperience")}
+              >
+                <Text style={styles.reviewBtnText}>Leave a Review</Text>
+              </TouchableOpacity>
+            )}
+            {/* Button to switch to cafeReviews */}
+            {activeView !== "rateExperience" && (
+              <TouchableOpacity
+                style={styles.reviewBtn}
+                onPress={() => setActiveView("rateExperience")}
               >
                 <Text style={styles.reviewBtnText}>Leave a Review</Text>
               </TouchableOpacity>

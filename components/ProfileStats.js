@@ -26,11 +26,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "#F6F0E3", // The background color of your component
-    borderRadius: 25, // Adjust as necessary
-    paddingVertical: 10, // Adjust as necessary
-    paddingHorizontal: 20, // Adjust as necessary
-    margin: 10, // Adjust as necessary
+    backgroundColor: "#F6F0E3", 
+    borderRadius: 25, 
+    paddingVertical: 10, 
+    paddingHorizontal: 20, 
+    margin: 10, 
+    marginRight: 20, 
   },
   statItem: {
     alignItems: "center",
