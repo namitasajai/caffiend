@@ -1,21 +1,20 @@
-import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, Platform, Linking } from "react-native";
-import Modal from "react-native-modal";
+import React, { useState, useRef } from "react";
 import {
-  Heart,
-  CurrencyDollar,
-  WifiHigh,
-  ForkKnife,
-  Coffee,
-  CopySimple,
-  CaretDown,
-  CaretRight,
-  ArrowElbowUpRight,
-  PlusCircle,
-} from "phosphor-react-native";
-import RatingSlider from "./ReviewPage/StarRating";
-import FriendSelector from "./ReviewPage/FriendSelector";
-import AddPhoto from "./ReviewPage/AddPhoto";
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Text,
+  Animated,
+} from "react-native";
+import Modal from "react-native-modal";
+import { CaretDown } from "phosphor-react-native";
+import {
+  PanGestureHandler,
+  State,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
+import CafePage from "./CafePage";
+import ReviewView from "./ReviewView";
 
 const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
   
@@ -26,151 +25,84 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
     Linking.openURL(url).catch(err => console.error("An error occurred", err));
   };
 
-  return (
-    <Modal
-      isVisible={isVisible}
-      onSwipeComplete={onSwipeComplete}
-      onBackdropPress={onSwipeComplete}
-      swipeDirection={["down"]}
-      style={styles.bottomModal}
-    >
-      <View style={styles.content}>
-        <Image source={{ uri: cafe.imageUrl }} style={styles.image} />
-        <TouchableOpacity style={styles.closeBtn} onPress={onSwipeComplete}>
-          <CaretDown size={32} color="#000" weight="thin" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.reviewBtn}
-          onPress={() => {
-            console.log(cafe); // Debug: Log the cafe object
-            navigation.navigate("ReviewScreen", {
-              cafe: cafe,
-              isVisible: isVisible,
-              onSwipeComplete: onSwipeComplete,
-              navigation: navigation,
-            });
-          }}
-        >
-          <Text style={styles.reviewBtnText}>Leave a Review</Text>
-        </TouchableOpacity>
+  const [activeView, setActiveView] = useState("cafeView");
+  const translateY = useRef(new Animated.Value(0)).current;
 
-        <View style={styles.contentContainer}>
-          <View style={styles.infoContainer}>
-            <Text style={styles.name}>{cafe.name}</Text>
-            <Heart color="#FF4141" weight="fill" />
-          </View>
-          <View style={styles.infoContainer}>
-            <Text style={styles.tag}>good study spot</Text>
-            <Text style={styles.tag}>artisanal coffee</Text>
-            <TouchableOpacity>
-              <PlusCircle size={30} color="#666" weight="thin" />
+  const onGestureEvent = Animated.event(
+    [{ nativeEvent: { translationY: translateY } }],
+    { useNativeDriver: true }
+  );
+
+  const onHandlerStateChange = (event) => {
+    if (event.nativeEvent.oldState === State.ACTIVE) {
+      let { translationY } = event.nativeEvent;
+      translateY.setValue(0); // Reset translationY
+      if (translationY > 100) {
+        // Threshold to decide closing
+        onSwipeComplete();
+      } else {
+        Animated.spring(translateY, {
+          toValue: 0,
+          tension: 200,
+          friction: 12,
+          useNativeDriver: true,
+        }).start();
+      }
+    }
+  };
+
+  
+  const openDirections = () => {
+    const encodedAddress = encodeURIComponent(cafe.address); // Ensure the address is URL-encoded
+    const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
+    const url = `${scheme}?q=${encodedAddress}`;
+    Linking.openURL(url).catch(err => console.error("An error occurred", err));
+  };
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Modal
+        isVisible={isVisible}
+        onBackdropPress={onSwipeComplete}
+        style={styles.bottomModal}
+        useNativeDriver={true}
+        onSwipeComplete={onSwipeComplete}
+      >
+        <PanGestureHandler
+          onGestureEvent={onGestureEvent}
+          onHandlerStateChange={onHandlerStateChange}
+        >
+          <Animated.View
+            style={[
+              styles.content,
+              {
+                transform: [{ translateY }],
+              },
+            ]}
+          >
+            <Image source={{ uri: cafe.imageUrl }} style={styles.image} />
+            <TouchableOpacity style={styles.closeBtn} onPress={onSwipeComplete}>
+              <CaretDown size={32} color="#000" weight="thin" />
             </TouchableOpacity>
-          </View>
-          <RatingSlider />
-          <FriendSelector />
-          <AddPhoto />
-          <View style={styles.infoContainer}>
-            <Text style={styles.distance}>{cafe.distance} miles</Text>
-            <Coffee size={16} color="#333333" />
-            <ForkKnife size={16} color="#333333" />
-            <WifiHigh size={16} color="#333333" />
-            <View style={styles.priceRating}>
-              <CurrencyDollar
-                style={styles.priceRatingItem}
-                size={16}
-                color="#333333"
-              />
-              <CurrencyDollar
-                style={styles.priceRatingItem}
-                size={16}
-                color="#333333"
-              />
-              <CurrencyDollar
-                style={styles.priceRatingItem}
-                size={16}
-                color="#666"
-              />
-              <CurrencyDollar
-                style={styles.priceRatingItem}
-                size={16}
-                color="#666"
-              />
-            </View>
-            <TouchableOpacity onPress={openDirections} style={styles.directionsButton}>
-              <ArrowElbowUpRight size={16} color="#FFFFFF" weight="bold" />
-              <Text style={styles.directionsText}>Directions</Text>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity style={styles.ratingContainer}>
-            <Text style={styles.rating}>{cafe.rating}</Text>
-            <CaretRight size={16} color="#E58D23" weight="bold" />
-          </TouchableOpacity>
-          <View style={styles.photoContainer}>
-            <Image
-              style={styles.photo}
-              source={{
-                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-              }}
-            />
-            <Image
-              style={styles.photo}
-              source={{
-                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-              }}
-            />
-            <Image
-              style={styles.photo}
-              source={{
-                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-              }}
-            />
-            <Image
-              style={styles.photo}
-              source={{
-                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-              }}
-            />
-            <Image
-              style={styles.photo}
-              source={{
-                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-              }}
-            />
-            <Image
-              style={styles.photo}
-              source={{
-                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-              }}
-            />
-          </View>
-          <View style={styles.infoBox}>
-            <View style={styles.infoBoxHeader}>
-              <Text style={styles.infoBoxTitle}>Address</Text>
-              <View style={styles.infoBoxBtnContainer}>
-                <View style={styles.infoBoxBtn}>
-                  <CopySimple size={20} color="#FFF" />
-                </View>
-                <View style={styles.infoBoxBtn}>
-                  <ArrowElbowUpRight size={20} color="#FFF" />
-                </View>
-              </View>
-            </View>
-            <Text style={styles.infoBoxText}>3675 Market St,</Text>
-            <Text style={styles.infoBoxText}>Philadelphia, PA 19104</Text>
-          </View>
-          <View style={styles.infoBox}>
-            <View style={styles.infoBoxHeader}>
-              <Text style={styles.infoBoxTitle}>Hours</Text>
-              <CaretDown size={20} color="#333333" />
-            </View>
-            <Text style={styles.infoBoxText}>Mon-Fri: 7:00am - 7:00pm</Text>
-            <Text style={styles.infoBoxText}>Sat-Sun: 8:00am - 5:00pm</Text>
-          </View>
-          <Text style={styles.dividerHeader}> Know Before You Go </Text>
-        </View>
-        {/* Add other elements like address, hours, review button, etc. */}
-      </View>
-    </Modal>
+            {activeView === "cafeView" ? (
+              <CafePage cafe={cafe} />
+            ) : (
+              <ReviewView cafe={cafe} setActiveView={setActiveView} />
+            )}
+            {activeView === "cafeView" && (
+              <TouchableOpacity
+                style={styles.reviewBtn}
+                onPress={() => {
+                  setActiveView("rateExperience");
+                }}
+              >
+                <Text style={styles.reviewBtnText}>Leave a Review</Text>
+              </TouchableOpacity>
+            )}
+          </Animated.View>
+        </PanGestureHandler>
+      </Modal>
+    </GestureHandlerRootView>
   );
 };
 
@@ -334,6 +266,12 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_500Medium",
     color: "#333333",
     marginBottom: 2,
+  },
+  reviewHeading: {
+    fontSize: 20,
+    fontFamily: "Inter_500Medium",
+    color: "#333333",
+    marginVertical: 10,
   },
   dividerHeader: {
     fontSize: 20,
