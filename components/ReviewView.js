@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Text,
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { Text, StyleSheet, View, TouchableOpacity, FlatList } from "react-native";
 import StarRating from "./ReviewPage/StarRating";
 import FriendSelector from "./ReviewPage/FriendSelector";
 import AddPhoto from "./ReviewPage/AddPhoto";
@@ -14,30 +8,91 @@ import CommentBox from "./ReviewPage/CommentBox";
 import { CaretLeft } from "phosphor-react-native";
 
 const ReviewView = ({ cafe, setActiveView }) => {
-  // Create a list of items to render in the FlatList
-  const data = [{ id: "header", type: "header" }];
+  // Define your sections here
+  const data = [
+    { type: 'header', content: cafe.name },
+    { type: 'rating', content: 'Rate your experience' },
+    { type: 'friends', content: 'Who did you go with?' },
+    { type: 'photos', content: 'Add photos' },
+    { type: 'attributes', content: 'Select all that apply' },
+    { type: 'tags', content: 'How would you describe this cafe?' },
+    { type: 'comment', content: 'Leave a comment' },
+    { type: 'submit', content: 'Post Review' }
+  ];
 
-  // Render different components based on the item type
+  const options1 = [
+    "Plenty of outlets", "Free Wi-Fi", "Quiet", "Not too busy", "Pet-friendly",
+    "Plenty of seating", "Sustainable", "Quiet corners", "Affordable prices",
+    "Vegan options", "Vegetarian options", "Gluten-free"
+  ];
+
+  const options2 = [
+    "Quick service", "Local favorite", "Specialty drinks", "Live music nights", 
+    "Great for groups", "Outdoor seating", "Variety of pastries", "Excellent coffee", 
+    "Friendly staff", "Cozy seating"
+  ];
+
   const renderItem = ({ item }) => {
-    if (item.type === "header") {
-      return (
-        <>
+    switch (item.type) {
+      case 'header':
+        return (
           <View style={styles.flexBox}>
-            <TouchableOpacity
-              style={styles.closeBtn}
-              onPress={() => setActiveView("cafeView")}
-            >
+            <TouchableOpacity style={styles.closeBtn} onPress={() => setActiveView("cafeView")}>
               <CaretLeft size={24} color="#000" />
             </TouchableOpacity>
-            <Text style={styles.name}>{cafe.name}</Text>
+            <Text style={styles.name}>{item.content}</Text>
           </View>
-          <Text style={styles.reviewHeading}>Rate your experience</Text>
-          <StarRating />
-          <Text style={styles.reviewHeading}>Who did you go with? </Text>
-        </>
-      );
-    } else {
-      return null; // Placeholder for potentially more types
+        );
+      case 'rating':
+        return (
+          <>
+            <Text style={styles.reviewHeading}>{item.content}</Text>
+            <StarRating />
+          </>
+        );
+      case 'friends':
+        return (
+          <>
+            <Text style={styles.reviewHeading}>{item.content}</Text>
+            <FriendSelector />
+          </>
+        );
+      case 'photos':
+        return (
+          <>
+            <Text style={styles.reviewHeading}>{item.content}</Text>
+            <AddPhoto />
+          </>
+        );
+      case 'attributes':
+        return (
+          <>
+            <Text style={styles.reviewHeading}>{item.content}</Text>
+            <SelectableButtons options={options1} />
+          </>
+        );
+      case 'tags':
+        return (
+          <>
+            <Text style={styles.reviewHeading}>{item.content}</Text>
+            <SelectableButtons options={options2} />
+          </>
+        );
+      case 'comment':
+        return (
+          <>
+            <Text style={styles.reviewHeading}>{item.content}</Text>
+            <CommentBox />
+          </>
+        );
+      case 'submit':
+        return (
+          <TouchableOpacity style={styles.reviewBtn}>
+            <Text style={styles.reviewBtnText}>{item.content}</Text>
+          </TouchableOpacity>
+        );
+      default:
+        return null;
     }
   };
 
@@ -45,25 +100,8 @@ const ReviewView = ({ cafe, setActiveView }) => {
     <FlatList
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-      style={styles.contentContainer}
-      ListFooterComponent={() => (
-        <>
-          <FriendSelector />
-          <Text style={styles.reviewHeading}>Add photos </Text>
-          <AddPhoto />
-          <Text style={styles.reviewHeading}>Select all that apply </Text>
-          <SelectableButtons />
-          <Text style={styles.reviewHeading}>
-            How did you describe this cafe?{" "}
-          </Text>
-          <SelectableButtons />
-          <CommentBox />
-          <TouchableOpacity style={styles.reviewBtn}>
-            <Text style={styles.reviewBtnText}>Post</Text>
-          </TouchableOpacity>
-        </>
-      )}
+      keyExtractor={(item, index) => index.toString()}
+      contentContainerStyle={styles.contentContainer}
     />
   );
 };
@@ -97,7 +135,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     marginVertical: 20,
     width: "100%",
-    marginBottom: 120,
+    marginBottom: 100,
   },
   reviewBtnText: {
     color: "#fff",
@@ -117,8 +155,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    gap: 4,
-  },
+    gap: 4, 
+  }, 
   name: {
     fontSize: 22,
     fontFamily: "Inter_500Medium",

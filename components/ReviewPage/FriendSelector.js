@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,42 +7,59 @@ import {
   TextInput,
   FlatList,
   ScrollView,
-  Animated,
   StyleSheet,
+  LayoutAnimation,
+  UIManager,
+  Platform,
 } from "react-native";
 import { Plus, ArrowLeft, XCircle } from "phosphor-react-native";
 
-// Example friends data
+// Enable LayoutAnimation on Android
+if (
+  Platform.OS === "android" &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
 const friendsList = [
-  { id: "1", name: "Alice", avatar: "https://via.placeholder.com/50" },
-  { id: "2", name: "Bob", avatar: "https://via.placeholder.com/50" },
-  { id: "3", name: "Charlie", avatar: "https://via.placeholder.com/50" },
-  { id: "4", name: "Samba", avatar: "https://via.placeholder.com/50" },
-  { id: "5", name: "Chutney", avatar: "https://via.placeholder.com/50" },
+  {
+    id: "1",
+    name: "Kayla",
+    avatar:
+      "https://i.pinimg.com/564x/bb/8a/91/bb8a91a047deaa78f7a89228f80d92da.jpg",
+  },
+  {
+    id: "2",
+    name: "Sabine",
+    avatar:
+      "https://i.pinimg.com/564x/9b/35/e8/9b35e8639985d319099c9073c6df0a02.jpg",
+  },
+  {
+    id: "3",
+    name: "Namita",
+    avatar:
+      "https://i.pinimg.com/564x/eb/25/1d/eb251dd2a9d2f0d772a98aaf01c9190c.jpg",
+  },
+  {
+    id: "4",
+    name: "Samba",
+    avatar:
+      "https://i.pinimg.com/564x/c7/aa/50/c7aa509f4b23d77582225a2ae1d2ec2c.jpg",
+  },
 ];
 
 export default function FriendSelector() {
-  const [isScrolling, setIsScrolling] = useState(false);
   const [selectedFriends, setSelectedFriends] = useState([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const animationHeight = useRef(new Animated.Value(0)).current;
   const [filteredFriends, setFilteredFriends] = useState(friendsList);
 
+  useEffect(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  }, [isExpanded, selectedFriends]);
+
   const toggleExpand = () => {
-    if (isExpanded) {
-      Animated.timing(animationHeight, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
-    } else {
-      Animated.timing(animationHeight, {
-        toValue: 200,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
-    }
     setIsExpanded(!isExpanded);
     setSearchTerm("");
     setFilteredFriends(friendsList);
@@ -71,18 +88,8 @@ export default function FriendSelector() {
   };
 
   return (
-    <Animated.View
-      style={
-        selectedFriends.length >= 1
-          ? [styles.containerWithFriends, { height: animationHeight }]
-          : [styles.container, { height: animationHeight }]
-      }
-    >
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.horizontalScroll}
-      >
+    <View style={styles.container}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {!isExpanded ? (
           <>
             <TouchableOpacity onPress={toggleExpand} style={styles.addButton}>
@@ -110,9 +117,14 @@ export default function FriendSelector() {
           </>
         ) : (
           <View style={{ flexDirection: "row", alignItems: "top" }}>
-            <TouchableOpacity onPress={toggleExpand} style={styles.addButton}>
-              <ArrowLeft size={24} color="white" />
-            </TouchableOpacity>
+            <View style={styles.addButtonSearch}>
+              <TouchableOpacity
+                onPress={toggleExpand}
+                style={styles.innerButtonSearch}
+              >
+                <ArrowLeft size={24} color="white" />
+              </TouchableOpacity>
+            </View>
             <TextInput
               style={styles.searchBar}
               value={searchTerm}
@@ -128,24 +140,22 @@ export default function FriendSelector() {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={styles.friendItem}
               onPress={() => addFriend(item)}
+              style={styles.friendItem}
             >
-              <Image
-                source={{ uri: item.avatar }}
-                style={styles.friendAvatarSmall}
-              />
+              <View style={styles.friendAvatarSmallOutline}>
+                <Image
+                  source={{ uri: item.avatar }}
+                  style={styles.friendAvatarSmall}
+                />
+              </View>
+
               <Text>{item.name}</Text>
             </TouchableOpacity>
           )}
-          onScrollBeginDrag={() => setIsScrolling(true)}
-          onScrollEndDrag={() => setIsScrolling(false)}
-          onMomentumScrollBegin={() => setIsScrolling(true)}
-          onMomentumScrollEnd={() => setIsScrolling(false)}
-          style={styles.friendsList}
         />
       )}
-    </Animated.View>
+    </View>
   );
 }
 
@@ -159,15 +169,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingHorizontal: 10,
     minHeight: 70,
-  },
-  containerWithFriends: {
-    flexDirection: "column",
-    alignItems: "start",
-    gap: 6,
-    backgroundColor: "#F0E6D0",
-    borderRadius: 10,
-    padding: 10,
-    minHeight: 90,
   },
   horizontalScroll: {
     width: "100%",
@@ -183,7 +184,27 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 1,
     marginRight: 10,
+  },
+  addButtonSearch: {
+    width: 50,
+    height: 50,
+    borderTopLeftRadius: 25,
+    borderBottomLeftRadius: 25,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  innerButtonSearch: {
+    width: 49,
+    height: 49,
+    borderRadius: 25,
+    backgroundColor: "#9E7D5B",
+    borderColor: "white",
+    borderWidth: 3,
+    justifyContent: "center",
+    alignItems: "center",
     zIndex: 1,
   },
   friendContainer: {
@@ -208,21 +229,28 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 2,
     textAlign: "center",
+    marginBottom: 10,
   },
   searchBar: {
-    position: "absolute",
-    width: 330,
+    width: 270,
     height: 50,
-    paddingLeft: 55,
     padding: 10,
-    borderRadius: 25,
+    borderBottomRightRadius: 25,
+    borderTopRightRadius: 25,
     backgroundColor: "white",
   },
   friendAvatarSmall: {
     width: 40,
     height: 40,
     borderRadius: 20,
+  },
+  friendAvatarSmallOutline: {
+    width: 43,
+    height: 43,
+    borderRadius: 20,
     marginRight: 10,
+    borderColor: "white",
+    borderWidth: 2,
   },
   friendItem: {
     paddingHorizontal: 6,
