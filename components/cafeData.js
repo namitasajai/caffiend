@@ -23,7 +23,7 @@ const cafeData = [
   {
     name: "Java Lava",
     distance: "0.3",
-    address: "",
+    address: "293 Mercer St New York, NY 10184 Greenwich Village",
     imageUrl:
       "https://t3.ftcdn.net/jpg/05/58/70/08/360_F_558700873_okq1xCv9pwOfji89qkSPJKGDnCxMnIFT.jpg",
     rating: "4.6",

@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 10,
-    justifyContent: 'space-around' // Adjust this to space items evenly
+    justifyContent: "space-around", // Adjust this to space items evenly
   },
   iconButton: {
     width: 30,
