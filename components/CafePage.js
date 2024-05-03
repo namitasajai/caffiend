@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -24,8 +24,10 @@ import {
   SpeakerLow,
   BatteryLow,
 } from "phosphor-react-native";
+import StartSessionModal from "./StartSessionModal";
 
 const CafePage = ({ cafe, setActiveView }) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const openDirections = () => {
     const encodedAddress = encodeURIComponent(cafe.address); // Ensure the address is URL-encoded
     const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
@@ -59,130 +61,150 @@ const CafePage = ({ cafe, setActiveView }) => {
   ];
 
   return (
-    <ScrollView style={styles.scrollView}>
-      <View style={styles.contentContainer}>
-        <View style={styles.infoContainer}>
-          <Text style={styles.name}>{cafe.name}</Text>
-          <Heart color="#FF4141" weight="fill" />
-        </View>
-        <View style={styles.infoContainer}>
-          <Text style={styles.tag}>good study spot</Text>
-          <Text style={styles.tag}>artisanal coffee</Text>
-        </View>
-        <View style={styles.infoContainer}>
-          <Text style={styles.distance}>{cafe.distance} miles</Text>
-          <Coffee size={16} color="#333333" />
-          <ForkKnife size={16} color="#333333" />
-          <WifiHigh size={16} color="#333333" />
-          <View style={styles.priceRating}>
-            <CurrencyDollar
-              style={styles.priceRatingItem}
-              size={16}
-              color="#333333"
-            />
-            <CurrencyDollar
-              style={styles.priceRatingItem}
-              size={16}
-              color="#333333"
-            />
-            <CurrencyDollar
-              style={styles.priceRatingItem}
-              size={16}
-              color="#666"
-            />
-            <CurrencyDollar
-              style={styles.priceRatingItem}
-              size={16}
-              color="#666"
-            />
+    <>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.contentContainer}>
+          <View style={styles.infoContainer}>
+            <Text style={styles.name}>{cafe.name}</Text>
+            <Heart color="#FF4141" weight="fill" />
+          </View>
+          <View style={styles.infoContainer}>
+            <Text style={styles.tag}>good study spot</Text>
+            <Text style={styles.tag}>artisanal coffee</Text>
+            <TouchableOpacity>
+              <PlusCircle size={30} color="#666" weight="thin" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.infoContainer}>
+            <Text style={styles.distance}>{cafe.distance} miles</Text>
+            <Coffee size={16} color="#333333" />
+            <ForkKnife size={16} color="#333333" />
+            <WifiHigh size={16} color="#333333" />
+            <View style={styles.priceRating}>
+              <CurrencyDollar
+                style={styles.priceRatingItem}
+                size={16}
+                color="#333333"
+              />
+              <CurrencyDollar
+                style={styles.priceRatingItem}
+                size={16}
+                color="#333333"
+              />
+              <CurrencyDollar
+                style={styles.priceRatingItem}
+                size={16}
+                color="#666"
+              />
+              <CurrencyDollar
+                style={styles.priceRatingItem}
+                size={16}
+                color="#666"
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.directionsButton}
+              onPress={() => openDirections()}
+            >
+              <ArrowElbowUpRight size={16} color="#FFFFFF" weight="bold" />
+              <Text style={styles.directionsText}>Directions</Text>
+            </TouchableOpacity>
           </View>
           <TouchableOpacity
-            style={styles.directionsButton}
-            onPress={() => openDirections()}
+            style={styles.ratingContainer}
+            onPress={() => setActiveView("cafeReviews")}
           >
-            <ArrowElbowUpRight size={16} color="#FFFFFF" weight="bold" />
-            <Text style={styles.directionsText}>Directions</Text>
+            <Text style={styles.rating}>{cafe.rating}</Text>
+            <CaretRight size={16} color="#E58D23" weight="bold" />
           </TouchableOpacity>
-        </View>
-        <TouchableOpacity
-          style={styles.ratingContainer}
-          onPress={() => setActiveView("cafeReviews")}
-        >
-          <Text style={styles.rating}>{cafe.rating}</Text>
-          <CaretRight size={16} color="#E58D23" weight="bold" />
-        </TouchableOpacity>
-        <View style={styles.photoContainer}>
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-            }}
-          />
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-            }}
-          />
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-            }}
-          />
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-            }}
-          />
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-            }}
-          />
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
-            }}
-          />
-        </View>
-        <View style={styles.infoBox}>
-          <View style={styles.infoBoxHeader}>
-            <Text style={styles.infoBoxTitle}>Address</Text>
-            <View style={styles.infoBoxBtnContainer}>
-              <View style={styles.infoBoxBtn}>
-                <CopySimple size={20} color="#FFF" />
-              </View>
-              <View style={styles.infoBoxBtn}>
-                <ArrowElbowUpRight size={20} color="#FFF" />
+          <TouchableOpacity
+            style={styles.seshBtn}
+            onPress={() => setModalVisible(true)}
+          >
+            <Text style={styles.seshBtnText}>Start a Cafe Session</Text>
+          </TouchableOpacity>
+          <View style={styles.photoContainer}>
+            <Image
+              style={styles.photo}
+              source={{
+                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
+              }}
+            />
+            <Image
+              style={styles.photo}
+              source={{
+                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
+              }}
+            />
+            <Image
+              style={styles.photo}
+              source={{
+                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
+              }}
+            />
+            <Image
+              style={styles.photo}
+              source={{
+                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
+              }}
+            />
+            <Image
+              style={styles.photo}
+              source={{
+                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
+              }}
+            />
+            <Image
+              style={styles.photo}
+              source={{
+                uri: "https://i.pinimg.com/564x/2f/95/c5/2f95c5018a76147acc3939dff3fb68f2.jpg",
+              }}
+            />
+          </View>
+          <View style={styles.infoBox}>
+            <View style={styles.infoBoxHeader}>
+              <Text style={styles.infoBoxTitle}>Address</Text>
+              <View style={styles.infoBoxBtnContainer}>
+                <View style={styles.infoBoxBtn}>
+                  <CopySimple size={20} color="#FFF" />
+                </View>
+                <View style={styles.infoBoxBtn}>
+                  <ArrowElbowUpRight size={20} color="#FFF" />
+                </View>
               </View>
             </View>
+            <Text style={styles.infoBoxText}>3675 Market St,</Text>
+            <Text style={styles.infoBoxText}>Philadelphia, PA 19104</Text>
           </View>
-          <Text style={styles.infoBoxText}>3675 Market St,</Text>
-          <Text style={styles.infoBoxText}>Philadelphia, PA 19104</Text>
-        </View>
-        <View style={styles.infoBox}>
-          <View style={styles.infoBoxHeader}>
-            <Text style={styles.infoBoxTitle}>Hours</Text>
-            <CaretDown size={20} color="#333333" />
-          </View>
-          <Text style={styles.infoBoxText}>Mon-Fri: 7:00am - 7:00pm</Text>
-          <Text style={styles.infoBoxText}>Sat-Sun: 8:00am - 5:00pm</Text>
-        </View>
-        <Text style={styles.dividerHeader}> Know Before You Go </Text>
-        <View style={styles.infoBoxTags}>
-          {tagData.map((tag) => (
-            <View key={tag.key} style={styles.infoTag}>
-              {tag.icon}
-              <Text style={styles.tagText}>{tag.label}</Text>
+          <View style={styles.infoBox}>
+            <View style={styles.infoBoxHeader}>
+              <Text style={styles.infoBoxTitle}>Hours</Text>
+              <CaretDown size={20} color="#333333" />
             </View>
-          ))}
+            <Text style={styles.infoBoxText}>Mon-Fri: 7:00am - 7:00pm</Text>
+            <Text style={styles.infoBoxText}>Sat-Sun: 8:00am - 5:00pm</Text>
+          </View>
+          <Text style={styles.dividerHeader}> Know Before You Go </Text>
+          <View style={styles.infoBoxTags}>
+            {tagData.map((tag) => (
+              <View key={tag.key} style={styles.infoTag}>
+                {tag.icon}
+                <Text style={styles.tagText}>{tag.label}</Text>
+              </View>
+            ))}
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <StartSessionModal
+        isVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onStart={() => {
+          console.log("Session started for", cafe.name);
+          setModalVisible(false);
+        }}
+        cafeName={cafe.name}
+      />
+    </>
   );
 };
 
@@ -289,6 +311,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "Inter_400Regular",
     marginLeft: 4,
+  },
+  seshBtn: {
+    flexDirection: "row",
+    backgroundColor: "#96A978",
+    paddingHorizontal: 8,
+    paddingVertical: 7,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 5,
+  },
+  seshBtnText: {
+    color: "#fff",
+    fontSize: 14,
+    fontFamily: "Inter_400Regular",
   },
   ratingContainer: {
     backgroundColor: "#4F1C11",
