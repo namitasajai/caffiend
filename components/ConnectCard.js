@@ -31,12 +31,14 @@ const ConnectCard = ({ name, working, cafeName, text, date }) => {
       />
       <Text style={styles.text}>{text}</Text>
       <View style={styles.actionsContainer}>
-        <TouchableOpacity style={styles.iconButton}>
-          <Heart size={18} color="#CCCCCC" weight="fill" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <ChatCircle size={18} color="#CCCCCC" weight="fill" />
-        </TouchableOpacity>
+        <View style={styles.actionButtons}>
+          <TouchableOpacity style={styles.iconButton}>
+            <Heart size={18} color="#CCCCCC" weight="fill" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}>
+            <ChatCircle size={18} color="#CCCCCC" weight="fill" />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.date}>{date}</Text>
         <TouchableOpacity style={styles.connectButton}>
           <Text style={styles.connectText}>Connect</Text>
@@ -87,7 +89,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Inter_400Regular",
   },
+  actionsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+    justifyContent: "space-between", 
+  },
+  actionButtons: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifySelf: "flex-start",
+    gap: 6,
+  },
   date: {
+    justifySelf: "center",
     color: "#8F8F8F",
     fontSize: 12,
     fontFamily: "Inter",
@@ -95,12 +110,6 @@ const styles = StyleSheet.create({
     lineHeight: 12,
     wordWrap: "break-word",
     marginHorizontal: 10, // Adjust spacing around the date
-  },
-  actionsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 10,
-    justifyContent: "space-around", // Adjust this to space items evenly
   },
   iconButton: {
     width: 30,
@@ -115,6 +124,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 100,
+    justifySelf: "flex-end",
   },
   connectText: {
     fontFamily: "Inter_600SemiBold",
