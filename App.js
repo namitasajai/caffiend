@@ -8,6 +8,7 @@ import HomeScreen from "./pages/HomeScreen";
 import SocialScreen from "./pages/SocialScreen";
 import FavoritesScreen from "./pages/FavoritesScreen";
 import ReviewScreen from "./pages/ReviewScreen";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as SplashScreen from "expo-splash-screen";
 import {
   useFonts,
@@ -56,6 +57,7 @@ const App = () => {
   }
 
   return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
@@ -90,6 +92,7 @@ const App = () => {
           <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
       </NavigationContainer>
+    </GestureHandlerRootView>
   );
 };
 

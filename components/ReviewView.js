@@ -16,7 +16,7 @@ const ReviewView = ({ cafe, setActiveView }) => {
     { type: 'photos', content: 'Add photos' },
     { type: 'attributes', content: 'Select all that apply' },
     { type: 'tags', content: 'How would you describe this cafe?' },
-    { type: 'comment', content: 'Leave a comment' },
+    { type: 'comment' },
     { type: 'submit', content: 'Post Review' }
   ];
 
@@ -81,7 +81,6 @@ const ReviewView = ({ cafe, setActiveView }) => {
       case 'comment':
         return (
           <>
-            <Text style={styles.reviewHeading}>{item.content}</Text>
             <CommentBox />
           </>
         );

@@ -31,7 +31,7 @@ const CafeCard = ({ cafe, handleCafePress }) => {
 
   const getOfferings = () => {
     const attributes = [
-      { label: "plenty of uutlets", value: cafe.plentyOfOutlets },
+      { label: "plenty of outlets", value: cafe.plentyOfOutlets },
       { label: "free wifi", value: cafe.freeWifi },
       { label: "quiet", value: cafe.quiet },
       { label: "not too busy", value: cafe.notTooBusy },
@@ -42,7 +42,7 @@ const CafeCard = ({ cafe, handleCafePress }) => {
       { label: "affordable prices", value: cafe.affordablePrices },
       { label: "vegan options", value: cafe.veganOptions },
       { label: "vegetarian options", value: cafe.vegetarianOptions },
-      { label: "gluten-Free options", value: cafe.glutenFree },
+      { label: "gluten-free options", value: cafe.glutenFree },
     ];
     return attributes.filter((attr) => attr.value).map((attr) => attr.label);
   };
