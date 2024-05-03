@@ -2,11 +2,11 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Heart, ChatCircle } from "phosphor-react-native";
 
-const ReviewCard = () => {
+const ReviewCard = ({ name, cafe, rating, review, date }) => {
   return (
     <View style={styles.card}>
       <View style={styles.ratingContainer}>
-        <Text style={styles.rating}>8.5</Text>
+        <Text style={styles.rating}>{rating}</Text>
       </View>
       <View style={styles.topSection}>
         <Image
@@ -17,19 +17,15 @@ const ReviewCard = () => {
         />
         <View>
           <Text style={styles.userName}>
-            Kayla Simpson <Text style={styles.ratedText}>rated</Text>
+            {name} <Text style={styles.ratedText}>rated</Text>
           </Text>
           <View style={styles.coffeeShopNameContainer}>
-            <Text style={styles.coffeeShopName}>Elixr Coffee</Text>
+            <Text style={styles.coffeeShopName}>{cafe}</Text>
           </View>
         </View>
       </View>
       <View style={styles.reviewContainer}>
-        <Text style={styles.reviewText}>
-          Coffee was pretty good! Would not recommend their pastries though.
-          Spend a good 3hrs studying here and had a pretty productive sesh:)
-          Wish me luck for midterms tmrw.
-        </Text>
+        <Text style={styles.reviewText}>{review}</Text>
         <View style={styles.photoStrip}>
           <Image
             style={styles.photo}
@@ -41,7 +37,7 @@ const ReviewCard = () => {
         </View>
       </View>
 
-      <Text style={styles.date}>March 31, 2024 at 3:58pm</Text>
+      <Text style={styles.date}>{date}</Text>
 
       <View style={styles.actionsContainer}>
         <TouchableOpacity style={styles.iconButton}>
@@ -88,14 +84,17 @@ const styles = StyleSheet.create({
   coffeeShopNameContainer: {
     backgroundColor: "#96A978",
     borderRadius: 27,
+    justifyContent: "center",
+    alignContent: "center",
     marginTop: 4,
     paddingHorizontal: 10, // Provide horizontal padding
     paddingVertical: 2, // Provide vertical padding
-    width: 100,
+    width: 140,
   },
   coffeeShopName: {
+    textAlign: "center",
     color: "#FBF8F1",
-    fontSize: 13.72,
+    fontSize: 11,
     fontFamily: "Inter_600SemiBold",
   },
   ratingContainer: {

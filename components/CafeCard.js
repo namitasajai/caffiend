@@ -17,8 +17,8 @@ import {
   Heart,
 } from "phosphor-react-native";
 
-const CafeCard = ({ cafe, handleCafePress }) => {
-  const [isFavorited, setIsFavorited] = useState(cafe.favorited);
+const CafeCard = ({ cafe, handleCafePress, backgroundColor, showRating = true }) => {
+  const [isFavorited, setIsFavorited] = useState(cafe?.favorited || false);
   const [showOfferings, setShowOfferings] = useState(false);
 
   const toggleFavorite = () => {
@@ -31,58 +31,57 @@ const CafeCard = ({ cafe, handleCafePress }) => {
 
   const getOfferings = () => {
     const attributes = [
-      { label: "plenty of outlets", value: cafe.plentyOfOutlets },
-      { label: "free wifi", value: cafe.freeWifi },
-      { label: "quiet", value: cafe.quiet },
-      { label: "not too busy", value: cafe.notTooBusy },
-      { label: "pet friendly", value: cafe.petFriendly },
-      { label: "plenty of seating", value: cafe.plentyOfSeating },
-      { label: "sustainable", value: cafe.sustainable },
-      { label: "quiet corners", value: cafe.quietCorners },
-      { label: "affordable prices", value: cafe.affordablePrices },
-      { label: "vegan options", value: cafe.veganOptions },
-      { label: "vegetarian options", value: cafe.vegetarianOptions },
-      { label: "gluten-free options", value: cafe.glutenFree },
+      { label: "plenty of outlets", value: cafe?.plentyOfOutlets },
+      { label: "free wifi", value: cafe?.freeWifi },
+      { label: "quiet", value: cafe?.quiet },
+      { label: "not too busy", value: cafe?.notTooBusy },
+      { label: "pet friendly", value: cafe?.petFriendly },
+      { label: "plenty of seating", value: cafe?.plentyOfSeating },
+      { label: "sustainable", value: cafe?.sustainable },
+      { label: "quiet corners", value: cafe?.quietCorners },
+      { label: "affordable prices", value: cafe?.affordablePrices },
+      { label: "vegan options", value: cafe?.veganOptions },
+      { label: "vegetarian options", value: cafe?.vegetarianOptions },
+      { label: "gluten-free options", value: cafe?.glutenFree },
     ];
-    return attributes.filter((attr) => attr.value).map((attr) => attr.label);
+    return attributes.filter(attr => attr.value).map(attr => attr.label);
   };
 
   const openDirections = () => {
-    const encodedAddress = encodeURIComponent(cafe.address); // Ensure the address is URL-encoded
+    if (!cafe?.address) return;
+    const encodedAddress = encodeURIComponent(cafe.address);
     const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
     const url = `${scheme}?q=${encodedAddress}`;
-    Linking.openURL(url).catch(err => console.error("An error occurred", err));
+    Linking.openURL(url).catch(err =>
+      console.error("An error occurred", err)
+    );
   };
-  
+
+  const cardStyle = StyleSheet.flatten([
+    styles.card,
+    { backgroundColor: backgroundColor || "#F0E6D0" },
+  ]);
 
   return (
-    <TouchableOpacity style={styles.card} onPress={() => handleCafePress(cafe)}>
-      <Image source={{ uri: cafe.imageUrl }} style={styles.image} />
+    <TouchableOpacity style={cardStyle} onPress={() => handleCafePress(cafe)}>
+      <Image source={{ uri: cafe?.imageUrl }} style={styles.image} />
       <View style={styles.details}>
-        <Text style={styles.name}>{cafe.name}</Text>
+        <Text style={styles.name}>{cafe?.name}</Text>
         <View style={styles.subheading}>
-          <Text style={styles.distance}>{cafe.distance} miles</Text>
-          <TouchableOpacity
-            onPress={openDirections}
-            style={styles.directionsButton}
-          >
-            <ArrowElbowUpRight size={16} color="#FFFFFF" weight="bold" />
+          <Text style={styles.distance}>{cafe?.distance} miles</Text>
+          <TouchableOpacity onPress={openDirections} style={styles.directionsButton}>
+            <ArrowElbowUpRight size={16} color="#FFFFFF" />
             <Text style={styles.directionsText}>Directions</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          onPress={toggleOfferings}
-          style={styles.offeringsButton}
-        >
+        <TouchableOpacity onPress={toggleOfferings} style={styles.offeringsButton}>
           <Text style={styles.offeringsText}>Offerings</Text>
           <Plus size={16} color="#666666" />
         </TouchableOpacity>
         {showOfferings && (
           <View style={styles.offeringsList}>
             {getOfferings().map((offering, index) => (
-              <Text key={index} style={styles.offeringText}>
-                {offering}
-              </Text>
+              <Text key={index} style={styles.offeringText}>{offering}</Text>
             ))}
           </View>
         )}
@@ -91,20 +90,13 @@ const CafeCard = ({ cafe, handleCafePress }) => {
           <ForkKnife size={16} color="#333333" />
           <WifiHigh size={16} color="#333333" />
         </View>
-        <View style={styles.ratingContainer}>
-          <Text style={styles.rating}>{cafe.rating}</Text>
-        </View>
-        <TouchableOpacity
-          style={styles.favoriteContainer}
-          onPress={toggleFavorite}
-        >
-          {
-            <Heart
-              size={30}
-              color="#E66565"
-              weight={isFavorited ? "fill" : "thin"}
-            />
-          }
+        {showRating && cafe?.rating && (
+          <View style={styles.ratingContainer}>
+            <Text style={styles.rating}>{cafe.rating}</Text>
+          </View>
+        )}
+        <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteContainer}>
+          <Heart size={30} color="#E66565" weight={isFavorited ? "fill" : "thin"} />
         </TouchableOpacity>
       </View>
     </TouchableOpacity>

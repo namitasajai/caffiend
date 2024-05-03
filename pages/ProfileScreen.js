@@ -49,6 +49,7 @@ const ProfileScreen = () => {
             reviewText="Visited B Cup Cafe this morning and loved the vibrant atmosphere! The espresso was robust and the service quick. Their almond croissant is a must-try—flaky and flavorful. A great spot for a quick coffee break!"
             cafeName="B Cup Cafe"
             date="March 31, 2024 at 3:58pm"
+            rating="4.3"
             style={{ margin: 20 }}
           />
           <YourReviewCard
@@ -57,6 +58,7 @@ const ProfileScreen = () => {
           Wish me luck for midterms tmrw."
             cafeName="Elixr Coffee"
             date="April 4, 2024 at 6:26pm"
+            rating="4.0"
             style={{ margin: 20 }}
           />
         </ScrollView>

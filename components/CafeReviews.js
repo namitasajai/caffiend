@@ -69,9 +69,6 @@ const CafePage = ({ cafe, setActiveView }) => {
         <View style={styles.infoContainer}>
           <Text style={styles.tag}>good study spot</Text>
           <Text style={styles.tag}>artisanal coffee</Text>
-          <TouchableOpacity>
-            <PlusCircle size={30} color="#666" weight="thin" />
-          </TouchableOpacity>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.distance}>{cafe.distance} miles</Text>
@@ -108,15 +105,42 @@ const CafePage = ({ cafe, setActiveView }) => {
             <Text style={styles.directionsText}>Directions</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.ratingContainer} onPress={() => setActiveView("cafeView")}>
+        <TouchableOpacity
+          style={styles.ratingContainer}
+          onPress={() => setActiveView("cafeView")}
+        >
           <CaretLeft size={16} color="#E58D23" weight="bold" />
           <Text style={styles.rating}>{cafe.rating}</Text>
         </TouchableOpacity>
         <View style={styles.reviewContainer}>
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
+          <ReviewCard
+            name="Kayla Simpson"
+            cafe={cafe.name}
+            review="Coffee was pretty good! Would not recommend their pastries though.
+      Spend a good 3hrs studying here and had a pretty productive sesh:)
+      Wish me luck for midterms tmrw."
+            rating="4.5"
+            date="March 31, 2024 at 3:58pm"
+          />
+          <ReviewCard
+            name="Namita Sajai"
+            cafe={cafe.name}
+            review="Absolutely loved the cozy atmosphere! The espresso was top-notch, exactly what I needed to kickstart my day. 
+              The staff was super friendly, making the visit even more enjoyable. Managed to finish a couple of chapters of my book 
+              thanks to the peaceful vibe. Fingers crossed for my upcoming presentation!"
+            rating="4.8"
+            date="April 4, 2024 at 8:27am"
+          />
+          <ReviewCard
+            name="Sabine Mejia"
+            cafe={cafe.name}
+            review="This place has a fantastic selection of herbal teas which was a delightful 
+              surprise. I spent a few hours here catching up on work emails and it was quiet enough 
+              without being too silent. Their sandwiches are decent but the cakes are a bit too sweet
+               for my taste. Looking forward to coming back next week for another productive afternoon."
+            rating="4.0"
+            date="May 1, 2024 at 1:06pm"
+          />
         </View>
       </View>
     </ScrollView>

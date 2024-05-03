@@ -68,9 +68,6 @@ const CafePage = ({ cafe, setActiveView }) => {
         <View style={styles.infoContainer}>
           <Text style={styles.tag}>good study spot</Text>
           <Text style={styles.tag}>artisanal coffee</Text>
-          <TouchableOpacity>
-            <PlusCircle size={30} color="#666" weight="thin" />
-          </TouchableOpacity>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.distance}>{cafe.distance} miles</Text>

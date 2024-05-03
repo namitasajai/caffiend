@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const YourReviewCard = ({ reviewText, cafeName, date }) => {
+const YourReviewCard = ({ reviewText, cafeName, date, rating }) => {
   return (
     <View style={styles.card}>
       <View style={styles.topSection}>
@@ -9,7 +9,7 @@ const YourReviewCard = ({ reviewText, cafeName, date }) => {
           <Text style={styles.coffeeShopName}>{cafeName}</Text>
         </View>
         <View style={styles.ratingContainer}>
-          <Text style={styles.rating}>8.5</Text>
+          <Text style={styles.rating}>{rating}</Text>
         </View>
       </View>
       <Text style={styles.reviewText}>{reviewText}</Text>
