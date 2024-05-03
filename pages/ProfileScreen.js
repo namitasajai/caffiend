@@ -21,19 +21,22 @@ const ProfileScreen = () => {
       <Text style={styles.sectionHeader}>Your Cafe Sessions</Text>
       <ScrollView style={styles.scrollView} horizontal={true}>
         <CafeSessionCard
+          address="212 Avenue B, New York, NY 10009"
           name="B Cup Cafe"
           distance="5.4 miles"
           duration="2 hrs"
           iconSource={require("../assets/sabines-pfp.jpeg")}
         />
         <CafeSessionCard
-          name="Daily Brew"
+          address="31 3rd Ave, New York, NY 10003"
+          name="The Bean"
           distance="1.4 miles"
           duration="4 hrs"
           iconSource={require("../assets/sabines-pfp.jpeg")}
         />
         <CafeSessionCard
-          name="Latte Land"
+        address="134 9th Ave, New York, NY 10011"
+          name="Stone Street Coffee"
           distance="2.6 miles"
           duration="1 hr"
           iconSource={require("../assets/sabines-pfp.jpeg")}
@@ -44,6 +47,7 @@ const ProfileScreen = () => {
         <YourReviewCard
           reviewText="Visited B Cup Cafe this morning and loved the vibrant atmosphere! The espresso was robust and the service quick. Their almond croissant is a must-try—flaky and flavorful. A great spot for a quick coffee break!"
           cafeName="B Cup Cafe"
+          date="March 31, 2024 at 3:58pm"
           style={{ margin: 20 }}
         />
         <YourReviewCard
@@ -51,6 +55,7 @@ const ProfileScreen = () => {
           Spend a good 3hrs studying here and had a pretty productive sesh:)
           Wish me luck for midterms tmrw."
           cafeName="Elixr Coffee"
+          date="April 4, 2024 at 6:26pm"
           style={{ margin: 20 }}
         />
       </ScrollView>

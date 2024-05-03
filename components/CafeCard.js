@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Linking,
+  Platform,
+} from "react-native";
 import {
   ArrowElbowUpRight,
   Plus,
@@ -11,10 +19,41 @@ import {
 
 const CafeCard = ({ cafe, handleCafePress }) => {
   const [isFavorited, setIsFavorited] = useState(cafe.favorited);
+  const [showOfferings, setShowOfferings] = useState(false);
 
   const toggleFavorite = () => {
     setIsFavorited(!isFavorited);
   };
+
+  const toggleOfferings = () => {
+    setShowOfferings(!showOfferings);
+  };
+
+  const getOfferings = () => {
+    const attributes = [
+      { label: "plenty of uutlets", value: cafe.plentyOfOutlets },
+      { label: "free wifi", value: cafe.freeWifi },
+      { label: "quiet", value: cafe.quiet },
+      { label: "not too busy", value: cafe.notTooBusy },
+      { label: "pet friendly", value: cafe.petFriendly },
+      { label: "plenty of seating", value: cafe.plentyOfSeating },
+      { label: "sustainable", value: cafe.sustainable },
+      { label: "quiet corners", value: cafe.quietCorners },
+      { label: "affordable prices", value: cafe.affordablePrices },
+      { label: "vegan options", value: cafe.veganOptions },
+      { label: "vegetarian options", value: cafe.vegetarianOptions },
+      { label: "gluten-Free options", value: cafe.glutenFree },
+    ];
+    return attributes.filter((attr) => attr.value).map((attr) => attr.label);
+  };
+
+  const openDirections = () => {
+    const encodedAddress = encodeURIComponent(cafe.address); // Ensure the address is URL-encoded
+    const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
+    const url = `${scheme}?q=${encodedAddress}`;
+    Linking.openURL(url).catch(err => console.error("An error occurred", err));
+  };
+  
 
   return (
     <TouchableOpacity style={styles.card} onPress={() => handleCafePress(cafe)}>
@@ -23,15 +62,30 @@ const CafeCard = ({ cafe, handleCafePress }) => {
         <Text style={styles.name}>{cafe.name}</Text>
         <View style={styles.subheading}>
           <Text style={styles.distance}>{cafe.distance} miles</Text>
-          <TouchableOpacity style={styles.directionsButton}>
+          <TouchableOpacity
+            onPress={openDirections}
+            style={styles.directionsButton}
+          >
             <ArrowElbowUpRight size={16} color="#FFFFFF" weight="bold" />
             <Text style={styles.directionsText}>Directions</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.offeringsButton}>
+        <TouchableOpacity
+          onPress={toggleOfferings}
+          style={styles.offeringsButton}
+        >
           <Text style={styles.offeringsText}>Offerings</Text>
           <Plus size={16} color="#666666" />
         </TouchableOpacity>
+        {showOfferings && (
+          <View style={styles.offeringsList}>
+            {getOfferings().map((offering, index) => (
+              <Text key={index} style={styles.offeringText}>
+                {offering}
+              </Text>
+            ))}
+          </View>
+        )}
         <View style={styles.icons}>
           <Coffee size={16} color="#333333" />
           <ForkKnife size={16} color="#333333" />
@@ -65,7 +119,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 8,
-    marginHorizontal: 0,
   },
   image: {
     width: 100,
@@ -109,6 +162,22 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     marginLeft: 4,
   },
+  offeringsText: {
+    fontSize: 12,
+    marginRight: 4,
+  },
+  offeringsList: {
+    justifyContent: "center",
+    marginLeft: 12,
+    padding: 10,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 8,
+    marginRight: 75,
+  },
+  offeringText: {
+    fontSize: 10,
+    color: "#333",
+  },
   offeringsButton: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -129,7 +198,7 @@ const styles = StyleSheet.create({
   icons: {
     flexDirection: "row",
     gap: 8,
-    marginTop: 4,
+    marginTop: 8,
   },
   ratingContainer: {
     backgroundColor: "#4F1C11",

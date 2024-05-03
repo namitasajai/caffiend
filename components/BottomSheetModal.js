@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, Platform, Linking } from "react-native";
 import Modal from "react-native-modal";
 import {
   Heart,
@@ -18,6 +18,14 @@ import FriendSelector from "./ReviewPage/FriendSelector";
 import AddPhoto from "./ReviewPage/AddPhoto";
 
 const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
+  
+  const openDirections = () => {
+    const encodedAddress = encodeURIComponent(cafe.address); // Ensure the address is URL-encoded
+    const scheme = Platform.OS === "ios" ? "maps:" : "geo:";
+    const url = `${scheme}?q=${encodedAddress}`;
+    Linking.openURL(url).catch(err => console.error("An error occurred", err));
+  };
+
   return (
     <Modal
       isVisible={isVisible}
@@ -88,7 +96,7 @@ const BottomSheetModal = ({ isVisible, onSwipeComplete, cafe, navigation }) => {
                 color="#666"
               />
             </View>
-            <TouchableOpacity style={styles.directionsButton}>
+            <TouchableOpacity onPress={openDirections} style={styles.directionsButton}>
               <ArrowElbowUpRight size={16} color="#FFFFFF" weight="bold" />
               <Text style={styles.directionsText}>Directions</Text>
             </TouchableOpacity>
