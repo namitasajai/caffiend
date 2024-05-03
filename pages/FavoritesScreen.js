@@ -8,11 +8,14 @@ import {
 import CafeCard from "../components/CafeCard";
 import cafeData from "../components/cafeData";
 import Header from "../components/Header";
-import Filter from "../components/Filter"; // Import Filter component for filtering UI
+import Filter from "../components/Filter";
+import BottomSheetModal from "../components/BottomSheetModal";
 
 const FavoritesScreen = ({ navigation }) => {
+  const [selectedCafe, setSelectedCafe] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
   const [filters, setFilters] = useState({
     plentyOfOutlets: false,
     freeWifi: false,
@@ -27,6 +30,11 @@ const FavoritesScreen = ({ navigation }) => {
     vegetarianOptions: false,
     glutenFree: false,
   });
+
+  const handleCafePress = (cafe) => {
+    setSelectedCafe(cafe);
+    setModalVisible(true);
+  };
 
   const renderFilters = () => {
     return Object.keys(filters).map((filterKey) => (
@@ -93,10 +101,22 @@ const FavoritesScreen = ({ navigation }) => {
         <Text style={styles.title}>Your Favorites</Text>
         <View style={styles.cardContainer}>
           {favoritedCafes.map((cafe, index) => (
-            <CafeCard key={index.toString()} cafe={cafe} />
+            <CafeCard
+              key={index.toString()}
+              cafe={cafe}
+              handleCafePress={() => handleCafePress(cafe)}
+            />
           ))}
         </View>
       </ScrollView>
+      {isModalVisible && (
+        <BottomSheetModal
+          isVisible={isModalVisible}
+          onSwipeComplete={() => setModalVisible(false)}
+          cafe={selectedCafe}
+          navigation={navigation}
+        />
+      )}
     </View>
   );
 };
